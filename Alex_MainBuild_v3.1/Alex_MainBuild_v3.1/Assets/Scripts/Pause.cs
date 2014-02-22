@@ -7,7 +7,7 @@ public class Pause : MonoBehaviour
 
 	Texture paused;
 	bool gamePaused = false;
-	Color guiColor = Color.white;
+	Color background = Color.white;
 	Color pauseBox = Color.white;
 
 	private List<GameObject> unityPlayerController = new List<GameObject>();
@@ -17,26 +17,16 @@ public class Pause : MonoBehaviour
 	private GameObject[] camerasToAdd = new GameObject[2];
 	private bool testCameras = true;
 
+    bool[] selections = new bool[3] { false, false, false };
+    bool[] prevSelection = new bool[3] { true, true, true };
+    string[] texts = new string[3] { "Options", "How to Play", "Return to Main Menu." };
+
 	private float x;
 	private float y;
-//	public List<GameObject> gameobjects = new List<GameObject>();
-//	private List<MonoBehaviour> scripts = new List<MonoBehaviour>();
-	// Use this for initialization
+
 	void Start () 
 	{
-//		Object[] objects = Resources.FindObjectsOfTypeAll(typeof(GameObject));
-//		for (int i = 0; i < objects.Length; i++) 
-//		{
-//			if(((GameObject)objects[i]).activeInHierarchy && !((GameObject)objects[i]).GetComponent<Pause>()
-//			   && ((GameObject)objects[i]).GetComponent<MonoBehaviour>())
-//			{
-//				scripts.Add(((GameObject)objects[i]).GetComponent<MonoBehaviour>());
-//				if(((GameObject)objects[i]).GetComponent<OVRPlayerController>())
-//					Debug.Log("OVRPlayerController added");
-//			}
-//				
-//		}
-		guiColor.a = .5f;
+		background.a = .5f;
 		pauseBox.a = .75f;
 		paused = (Texture)Resources.Load("Paused");
 
@@ -60,7 +50,6 @@ public class Pause : MonoBehaviour
 
 	}
 	
-	// Update is called once per frame
 	void Update () 
 	{
 		if (testCameras) 
@@ -101,26 +90,68 @@ public class Pause : MonoBehaviour
 		}
 	}
 
-//	private void changeState (bool state)
-//	{
-//		foreach (MonoBehaviour script in scripts) 
-//		{
-//			if(script is OVRPlayerController)
-//				Debug.Log("OVR controller is disabled");
-//
-//			script.enabled = state;
-//		}
-//	}
-
 	void OnGUI()
 	{
-		if(gamePaused)
-		{
-			GUI.color = guiColor;
-			GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), paused, ScaleMode.StretchToFill, true, 0);
+        if (gamePaused)
+        {
+            menuArt();
 
-			GUI.color = pauseBox;
-			GUI.DrawTexture(new Rect( x * 100, y * 50, x * 750, y * 500), paused, ScaleMode.StretchToFill);
-		}
+            buttons();
+        }
 	}
+
+    private void buttons()
+    {
+        GUILayout.BeginArea(new Rect(120 * x, 150 * y, 100 * x, 500));
+        GUILayout.BeginVertical();
+            
+            for (int i = 0; i < selections.Length; i++)
+			{
+                if (i > 0)
+                    GUILayout.Space(25);
+
+                if (GUILayout.Toggle(selections[i], texts[i], GUI.skin.button, GUILayout.Height(100))
+                    && prevSelection[i] != selections[i])
+                {
+                    buttonSelection(selections, i);
+                }
+			}
+        GUILayout.EndVertical();
+        GUILayout.EndArea();
+    }
+
+    private void buttonSelection(bool[] choice, int i)
+    {
+        for (int j = 0; j < choice.Length; j++)
+        {
+             choice[j] = j == i;
+             if (j == i)
+                 prevSelection[j] = true;
+        }
+
+        switch (i)
+        {
+            case 0:
+                Debug.Log("Options selected");
+                break;
+            case 1:
+                Debug.Log("How to play selected");
+                break;
+            case 2:
+                Debug.Log("return to main menu selected");
+                break;
+            default:
+                Debug.Log("Value bigger than available cases passed int buttonSelection method");
+                break;
+        }
+    }
+
+    private void menuArt()
+    {
+            GUI.color = background;
+            GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), paused, ScaleMode.StretchToFill, true, 0);
+
+            GUI.color = pauseBox;
+            GUI.DrawTexture(new Rect(x * 100, y * 50, x * 750, y * 500), paused, ScaleMode.StretchToFill);
+    }
 }
