@@ -10,6 +10,8 @@ public class Pause : MonoBehaviour
 	Color background = Color.white;
 	Color pauseBox = Color.white;
 
+    GameObject currentPlayerController;
+
 	private List<GameObject> unityPlayerController = new List<GameObject>();
 
 	private List<Camera> cameras = new List<Camera>();
@@ -32,11 +34,14 @@ public class Pause : MonoBehaviour
 
 		if (GameObject.FindGameObjectWithTag("Player").GetComponent<MouseLook>()) 
 		{
+            Debug.Log("Unity Controller attached");
+
 			unityPlayerController.Add(GameObject.FindGameObjectWithTag("Player"));
 			unityPlayerController.Add(GameObject.FindGameObjectWithTag("MainCamera"));
 			unityPlayerController.Add(GameObject.FindGameObjectWithTag("MainCameraTwo"));
 		}
-			
+
+        currentPlayerController = GameObject.FindGameObjectWithTag("Player");
 
 		camerasToAdd = GameObject.FindGameObjectsWithTag("MainCamera");
 		for (int i = 0; i < camerasToAdd.Length; i++) 
@@ -47,7 +52,6 @@ public class Pause : MonoBehaviour
 		Resolution.Instance.CorrectResolution();
 		x = Resolution.Instance.X;
 		y = Resolution.Instance.Y;
-
 	}
 	
 	void Update () 
@@ -94,23 +98,86 @@ public class Pause : MonoBehaviour
 	{
         if (gamePaused)
         {
-            menuArt();
+            firstPersonControllerPause();
 
-            buttons();
+            ovrPlayerControllerPause();
         }
 	}
 
+    private void ovrPlayerControllerPause()
+    {
+        if(currentPlayerController.name == "OVRPlayerController")
+        {
+            menuArtOVR();
+            buttonsOVR();
+        }
+    }
+
+    private void buttonsOVR()
+    {
+        GUILayout.BeginArea(new Rect(80 * x, 100 * y, 100 * x, 500 * y));
+        GUILayout.BeginVertical();
+        for (int i = 0; i < selections.Length; i++)
+        {
+            if (i > 0)
+                GUILayout.Space(25 * y);
+                    
+            if (GUILayout.Toggle(selections[i], texts[i], GUI.skin.button, GUILayout.Height(100 * y))
+                && prevSelection[i] != selections[i])
+            {
+                buttonSelection(selections, i);
+            }
+        }
+        GUILayout.EndVertical();
+        GUILayout.EndArea();
+
+        GUILayout.BeginArea(new Rect(540 * x, 100 * y, 100 * x, 500 * y));
+        GUILayout.BeginVertical();
+        for (int i = 0; i < selections.Length; i++)
+        {
+            if (i > 0)
+                GUILayout.Space(25 * y);
+
+            if (GUILayout.Toggle(selections[i], texts[i], GUI.skin.button, GUILayout.Height(100 * y))
+                && prevSelection[i] != selections[i])
+            {
+                buttonSelection(selections, i);
+            }
+        }
+        GUILayout.EndVertical();
+        GUILayout.EndArea();
+    }
+
+    private void menuArtOVR()
+    {
+        GUI.color = background;
+        GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), paused, ScaleMode.StretchToFill, true, 0);
+
+        GUI.color = pauseBox;
+        GUI.DrawTexture(new Rect(x * 50, y * 50, x * 400, y * 500), paused, ScaleMode.StretchToFill);
+        GUI.DrawTexture(new Rect(x * 500, y * 50, x * 400, y * 500), paused, ScaleMode.StretchToFill);
+    }
+
+    private void firstPersonControllerPause()
+    {
+        if (currentPlayerController.name == "First Person Controller")
+        {
+            menuArt();
+            buttons();
+        }
+    }
+
     private void buttons()
     {
-        GUILayout.BeginArea(new Rect(120 * x, 150 * y, 100 * x, 500));
+        GUILayout.BeginArea(new Rect(120 * x, 150 * y, 100 * x, 500 * y));
         GUILayout.BeginVertical();
             
             for (int i = 0; i < selections.Length; i++)
 			{
                 if (i > 0)
-                    GUILayout.Space(25);
+                    GUILayout.Space(25 * y);
 
-                if (GUILayout.Toggle(selections[i], texts[i], GUI.skin.button, GUILayout.Height(100))
+                if (GUILayout.Toggle(selections[i], texts[i], GUI.skin.button, GUILayout.Height(100 * y))
                     && prevSelection[i] != selections[i])
                 {
                     buttonSelection(selections, i);
