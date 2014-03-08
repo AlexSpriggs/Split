@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
-public class WinCondition : MonoBehaviour {
+public class WinCondition : MonoBehaviour, ISubject {
 	
 	public int PuzzlesCompleted = 0;
 	
@@ -10,6 +11,8 @@ public class WinCondition : MonoBehaviour {
 	public GameObject endGameObject;
 
 	public GameObject spotLight;
+
+	private  List<IObserver> observers = new List<IObserver>();
 
 	// Use this for initialization
 	void Start () {
@@ -21,10 +24,10 @@ public class WinCondition : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		
-
-	
+	void Update () 
+	{
+		if(PuzzlesCompleted >= 1)
+			Notify();	
 	}
 	
 	void OnTriggerEnter(Collider col)
@@ -46,5 +49,24 @@ public class WinCondition : MonoBehaviour {
 
 		spotLight.GetComponent<Light>().enabled = true;
 
+	}
+
+	public void Attach(IObserver o)
+	{
+		observers.Add(o);
+	}
+
+	public void Detach(IObserver o)
+	{
+		observers.Remove(o);
+	}
+
+	public void Notify()
+	{
+		foreach (IObserver o in observers) 
+		{
+			o.ObserverUpdate(this, true);
+
+		}
 	}
 }
