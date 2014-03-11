@@ -96,7 +96,7 @@ public class OVRCameraController : OVRComponent
 	
 	// UNITY CAMERA FIELDS
 	// Set the background color for both cameras
-	private Color 		backgroundColor = new Color(0.192f, 0.302f, 0.475f, 1.0f);
+	public Color 		backgroundColor = new Color(0.105f, 0.105f, 0.105f, 1.0f);
 	public  Color       BackgroundColor
 	{
 		get{return backgroundColor;}
@@ -111,7 +111,7 @@ public class OVRCameraController : OVRComponent
 		set{nearClipPlane = value; UpdateCamerasDirtyFlag = true;}
 	}
 	
-	private float 		farClipPlane    = 100.0f;     
+	private float 		farClipPlane    = 300.0f;     
 	public  float 		FarClipPlane
 	{
 		get{return farClipPlane;}
