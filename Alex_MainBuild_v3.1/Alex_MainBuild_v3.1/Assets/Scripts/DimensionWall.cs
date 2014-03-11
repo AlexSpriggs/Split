@@ -3,14 +3,15 @@ using System.Collections;
 
 public class DimensionWall : MonoBehaviour {
 
+    public int layer;
 	// Use this for initialization
-	void Start () {
-	
+	void Awake () {
+        layer = gameObject.layer;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+        layer = gameObject.layer;
 	}
 
 	public void Switch()
