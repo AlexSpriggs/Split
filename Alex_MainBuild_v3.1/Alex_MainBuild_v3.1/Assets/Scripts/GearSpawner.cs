@@ -16,7 +16,6 @@ public class GearSpawner : MonoBehaviour, IObserver
 		else if(GameObject.FindGameObjectWithTag("Player").name == "First Person Controller")
 			assignWinCondition("First Person Controller");
 
-		winCondition.Attach(this);
 	}
 
 	private void assignWinCondition(string gameObjectName)
@@ -46,8 +45,6 @@ public class GearSpawner : MonoBehaviour, IObserver
 		if (sender is WinCondition && !spawnTheGear) 
 		{
 			spawnTheGear = (bool)message;
-
-			winCondition.Detach(this);
 		}
 	}
 }

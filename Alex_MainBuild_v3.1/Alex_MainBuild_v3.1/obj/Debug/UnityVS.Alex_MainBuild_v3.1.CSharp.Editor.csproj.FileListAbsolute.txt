@@ -1,0 +1,1 @@
+C:\Users\Zerophase\Documents\GitHub\Split\Alex_MainBuild_v3.1\Alex_MainBuild_v3.1\obj\Debug\UnityVS.Alex_MainBuild_v3.1.CSharp.Editor.csprojResolveAssemblyReference.cache
