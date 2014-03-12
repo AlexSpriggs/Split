@@ -93,8 +93,8 @@ public class PillarManager : MonoBehaviour, IObserver {
 
     private void raisePillarToHeight(GameObject pillar, float height)
     {
-        if (pillar.transform.localPosition.y >= (height - .2f)
-           && pillar.transform.localPosition.y <= (height + .2f))
+        if (pillar.transform.localPosition.y >= (height - .5f)
+           && pillar.transform.localPosition.y <= (height + .5f))
         {
             pillar.transform.Translate(Vector3.zero);
         }
