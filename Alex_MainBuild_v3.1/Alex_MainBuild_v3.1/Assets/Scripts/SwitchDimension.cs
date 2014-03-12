@@ -42,7 +42,7 @@ public class SwitchDimension : MonoBehaviour {
     IEnumerator RaiseButtons()
     {
         puzzleButtonsAreRaising = true;
-        for (int i = 0; i < 30; ++i)
+        for (int i = 0; i < 60; ++i)
         {
             //PuzzleButtons.transform.position += new Vector3(PuzzleButtons.transform.position.x,
             //    .5f / 30,

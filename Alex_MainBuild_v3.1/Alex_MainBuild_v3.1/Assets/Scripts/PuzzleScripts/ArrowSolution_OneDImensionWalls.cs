@@ -30,7 +30,7 @@ public class ArrowSolution_OneDImensionWalls : ArrowSolution_OneInput {
                 case 0:
                     if (orderPressed[i] == ArrowDirection.LEFT)
                     {
-
+						Debug.Log("Left");
                     }
                     else
                         orderPressed.Clear();
@@ -38,7 +38,7 @@ public class ArrowSolution_OneDImensionWalls : ArrowSolution_OneInput {
                 case 1:
                     if (orderPressed[i] == ArrowDirection.UP)
                     {
-
+						Debug.Log("Up");
                     }
                     else
                         orderPressed.Clear();
@@ -46,7 +46,7 @@ public class ArrowSolution_OneDImensionWalls : ArrowSolution_OneInput {
                 case 2:
                     if (orderPressed[i] == ArrowDirection.RIGHT)
                     {
-
+						Debug.Log("Right");
                     }
                     else
                         orderPressed.Clear();
