@@ -93,6 +93,9 @@ public class SwitchDimension : MonoBehaviour {
                 {
                     go.GetComponent<DimensionWall>().Switch();
                 }
+
+                //TODO move this somewhere else.  It keeps the current puzzle working, but could break something in the future.
+                puzzleButtonsAreRaising = false;
             }
         }
 	}
