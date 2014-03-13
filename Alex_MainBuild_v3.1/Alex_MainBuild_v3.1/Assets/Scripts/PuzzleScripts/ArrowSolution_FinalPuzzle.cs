@@ -9,6 +9,7 @@ public class ArrowSolution_FinalPuzzle : ArrowSolution {
     {
         if (correct)
         {
+            Application.LoadLevel("End");
             Debug.Log("Need to add what happens");
         }
 	}
