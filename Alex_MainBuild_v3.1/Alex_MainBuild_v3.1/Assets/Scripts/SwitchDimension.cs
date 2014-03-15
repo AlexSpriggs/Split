@@ -5,15 +5,16 @@ using System.Collections.Generic;
 public class SwitchDimension : MonoBehaviour {
 
 	public List<GameObject> MyWalls;
-    public List<GameObject> AllWalls;
-    public GameObject PuzzleButtons;
-    private static bool puzzleButtonsAreRaising = false;
-    private bool lockSwitches = false;
+	public List<GameObject> AllWalls;
+	public GameObject PuzzleButtons;
+	public Shader transparent,Specular;
+	private static bool puzzleButtonsAreRaising = false;
+	private bool lockSwitches = false;
+	private DimensionWall dw;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
+	static float baseColor = 255;	
+	Color transColor = new Color(30f / baseColor, 255f / baseColor , 0f / baseColor);
+	Color solidColor = new Color(188f / baseColor, 0f / baseColor , 255f / baseColor);
 	
 	// Update is called once per frame
 	void Update () {
@@ -53,33 +54,35 @@ public class SwitchDimension : MonoBehaviour {
 
     }
 
-    private bool allOnLayer8()
-    {
-        bool allOnOneSide = true;
-        foreach (GameObject g in AllWalls)
-        {
-            if(g.gameObject.layer == 9)
-                allOnOneSide = false;
-        }
-
-
-        return allOnOneSide;
-
-    }
-
-    private bool allOnLayer9()
-    {
-        bool allOnOneSide = true;
-        foreach (GameObject g in AllWalls)
-        {
-            if (g.gameObject.layer == 8)
-                allOnOneSide = false;
-        }
-
-
-        return allOnOneSide;
-
-    }
+	private bool allOnLayer8()
+	{
+		bool allOnOneSide = true;
+		foreach (GameObject g in AllWalls)
+		{
+			dw = (DimensionWall)g.GetComponent<DimensionWall>();
+			if(dw.SameLayer)
+				allOnOneSide = false;
+		}
+		
+		
+		return allOnOneSide;
+		
+	}
+	
+	private bool allOnLayer9()
+	{
+		bool allOnOneSide = true;
+		foreach (GameObject g in AllWalls)
+		{
+			dw = (DimensionWall)g.GetComponent<DimensionWall>();
+			if(!dw.SameLayer)
+				allOnOneSide = false;
+		}
+		
+		
+		return allOnOneSide;
+		
+	}
 
 	void OnTriggerEnter(Collider col)
 	{
@@ -87,6 +90,7 @@ public class SwitchDimension : MonoBehaviour {
         {
             if (col.gameObject.tag == "Player")
             {
+				Debug.Log("Switch Pressed");
                 if (!audio.isPlaying)
                     audio.Play();
                 foreach (GameObject go in MyWalls)
@@ -94,9 +98,20 @@ public class SwitchDimension : MonoBehaviour {
                     go.GetComponent<DimensionWall>().Switch();
                 }
 
+				changeButtonColor ();
+
                 //TODO move this somewhere else.  It keeps the current puzzle working, but could break something in the future.
                 puzzleButtonsAreRaising = false;
             }
         }
+	}
+
+	private void changeButtonColor ()
+	{
+		if (gameObject.renderer.material.color != transColor)
+			gameObject.renderer.material.color = transColor;
+		else
+			if (gameObject.renderer.material.color != solidColor)
+				gameObject.renderer.material.color = solidColor;
 	}
 }

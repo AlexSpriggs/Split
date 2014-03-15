@@ -4,9 +4,15 @@ using System.Collections;
 public class DimensionWall : MonoBehaviour {
 
     public int layer;
+	public float alpha;
+	public Material transparent, specular;
+	public Shader sTransparent, sSpecular;
+	public bool SameLayer;
 	// Use this for initialization
 	void Awake () {
         layer = gameObject.layer;
+
+		alpha = .15f;
 	}
 	
 	// Update is called once per frame
@@ -16,9 +22,18 @@ public class DimensionWall : MonoBehaviour {
 
 	public void Switch()
 	{
-		if(gameObject.layer == 8)
-			gameObject.layer = 9;
+		if(SameLayer)
+			SameLayer = false;
 		else
-			gameObject.layer = 8;
+			SameLayer = true;
+		
+		if(this.renderer.material.shader == sSpecular)
+		{
+			this.renderer.material = transparent;
+		}
+		else if(this.renderer.material.shader == sTransparent)
+		{
+			this.renderer.material = specular;
+		}
 	}
 }
