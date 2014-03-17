@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 813035c28ba684740bd4741b57f54e1b
 ModelImporter:
-  serializedVersion: 15
+  serializedVersion: 16
   fileIDToRecycleName:
     100000: //RootNode
     400000: //RootNode
@@ -58,6 +58,8 @@ ModelImporter:
     legStretch: .0500000007
     feetSpacing: 0
     rootMotionBoneName: 
-  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 16b073a3cffcebc458fcedefd9d0ab4b,
+    type: 3}
   animationType: 2
+  additionalBone: 0
   userData: 

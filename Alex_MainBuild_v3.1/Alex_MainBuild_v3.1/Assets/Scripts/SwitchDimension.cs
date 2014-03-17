@@ -6,9 +6,13 @@ public class SwitchDimension : MonoBehaviour {
 
 	public List<GameObject> MyWalls;
 	public List<GameObject> AllWalls;
+
 	public GameObject PuzzleButtons;
+    private WallPuzButtons wallPuzButtons;
+
 	public Shader transparent,Specular;
 	private static bool puzzleButtonsAreRaising = false;
+    private static bool solved = false;
 	private bool lockSwitches = false;
 	private DimensionWall dw;
 
@@ -16,14 +20,20 @@ public class SwitchDimension : MonoBehaviour {
 	Color transColor = new Color(30f / baseColor, 255f / baseColor , 0f / baseColor);
 	Color solidColor = new Color(188f / baseColor, 0f / baseColor , 255f / baseColor);
 	
+    void Start()
+    {
+        wallPuzButtons = PuzzleButtons.GetComponent<WallPuzButtons>();
+        changeButtonColor();
+    }
 	// Update is called once per frame
 	void Update () {
 
-        if (allOnLayer8() || allOnLayer9())
+        if ((allOnLayer8() || allOnLayer9()))
         {
+            
             lockSwitches = true;
             StartCoroutine(LowerSwitch());
-            if(!puzzleButtonsAreRaising)
+            if (!wallPuzButtons.PuzzleButtonsAreRaising)
                 StartCoroutine(RaiseButtons());
         }
 	
@@ -42,7 +52,7 @@ public class SwitchDimension : MonoBehaviour {
 
     IEnumerator RaiseButtons()
     {
-        puzzleButtonsAreRaising = true;
+        wallPuzButtons.PuzzleButtonsAreRaising = true;
         for (int i = 0; i < 60; ++i)
         {
             //PuzzleButtons.transform.position += new Vector3(PuzzleButtons.transform.position.x,
@@ -60,13 +70,11 @@ public class SwitchDimension : MonoBehaviour {
 		foreach (GameObject g in AllWalls)
 		{
 			dw = (DimensionWall)g.GetComponent<DimensionWall>();
-			if(dw.SameLayer)
-				allOnOneSide = false;
+            if(dw.SameLayer)
+			    allOnOneSide = false;
 		}
-		
-		
+
 		return allOnOneSide;
-		
 	}
 	
 	private bool allOnLayer9()
@@ -75,13 +83,11 @@ public class SwitchDimension : MonoBehaviour {
 		foreach (GameObject g in AllWalls)
 		{
 			dw = (DimensionWall)g.GetComponent<DimensionWall>();
-			if(!dw.SameLayer)
+            if (!dw.SameLayer)
 				allOnOneSide = false;
 		}
-		
-		
+
 		return allOnOneSide;
-		
 	}
 
 	void OnTriggerEnter(Collider col)
@@ -101,17 +107,19 @@ public class SwitchDimension : MonoBehaviour {
 				changeButtonColor ();
 
                 //TODO move this somewhere else.  It keeps the current puzzle working, but could break something in the future.
-                puzzleButtonsAreRaising = false;
             }
         }
 	}
 
 	private void changeButtonColor ()
 	{
-		if (gameObject.renderer.material.color != transColor)
-			gameObject.renderer.material.color = transColor;
-		else
-			if (gameObject.renderer.material.color != solidColor)
-				gameObject.renderer.material.color = solidColor;
+        foreach (GameObject wall in MyWalls)
+        {
+            if (wall.GetComponent<DimensionWall>().SameLayer == true)
+                gameObject.renderer.material.color = transColor;
+            else if (wall.GetComponent<DimensionWall>().SameLayer == false)
+                gameObject.renderer.material.color = solidColor;
+        }
+        
 	}
 }

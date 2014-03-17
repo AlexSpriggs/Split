@@ -13,6 +13,15 @@ public class DimensionWall : MonoBehaviour {
         layer = gameObject.layer;
 
 		alpha = .15f;
+
+        //if (this.renderer.material.shader == sSpecular)
+        //{
+        //    this.renderer.material = specular;
+        //}
+        //else if (this.renderer.material.shader == sTransparent)
+        //{
+        //    this.renderer.material = transparent;
+        //}
 	}
 	
 	// Update is called once per frame
