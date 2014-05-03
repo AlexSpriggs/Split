@@ -14,7 +14,7 @@ public class ArrowPress : MonoBehaviour {
         {
 			if(!audio.isPlaying)
 				audio.Play();
-            Debug.Log("ArrowPress OnTriggerEnter");
+           // Debug.Log("ArrowPress OnTriggerEnter");
             Solution.SendMessage("CheckSolution", ButtonDirection);
         }
     }

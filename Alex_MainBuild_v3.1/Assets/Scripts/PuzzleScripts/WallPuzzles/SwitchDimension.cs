@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class SwitchDimension : MonoBehaviour {
 
@@ -11,10 +12,11 @@ public class SwitchDimension : MonoBehaviour {
     private WallPuzButtons wallPuzButtons;
 
 	public Shader transparent,Specular;
-	private static bool puzzleButtonsAreRaising = false;
-    private static bool solved = false;
+
 	private bool lockSwitches = false;
+
 	private DimensionWall dw;
+    private World lastWall;
 
 	static float baseColor = 255;	
 	Color transColor = new Color(30f / baseColor, 255f / baseColor , 0f / baseColor);
@@ -23,13 +25,16 @@ public class SwitchDimension : MonoBehaviour {
     void Start()
     {
         wallPuzButtons = PuzzleButtons.GetComponent<WallPuzButtons>();
+
+        lastWall = AllWalls.Last<GameObject>().GetComponent<DimensionWall>().CameraSpace;
+
+        changeButtonColor();
     }
 	// Update is called once per frame
 	void Update () {
 
-        if ((allOnLayer8() || allOnLayer9()))
+        if (allOnSameLayer())
         {
-            
             lockSwitches = true;
             StartCoroutine(LowerSwitch());
             if (!wallPuzButtons.PuzzleButtonsAreRaising)
@@ -38,9 +43,19 @@ public class SwitchDimension : MonoBehaviour {
 	
 	}
 
+    IEnumerator RaiseButtons()
+    {
+        wallPuzButtons.PuzzleButtonsAreRaising = true;
+        for (int i = 0; i < 60; ++i)
+        {
+            PuzzleButtons.transform.Translate(Vector3.up * Time.deltaTime);
+            yield return new WaitForFixedUpdate();
+        }
+
+    }
+
     IEnumerator LowerSwitch()
     {
-       
         for (int i = 0; i < 30; ++i)
         {
             transform.Translate(Vector3.down * Time.deltaTime);
@@ -49,45 +64,17 @@ public class SwitchDimension : MonoBehaviour {
 
     }
 
-    IEnumerator RaiseButtons()
+    private bool allOnSameLayer()
     {
-        wallPuzButtons.PuzzleButtonsAreRaising = true;
-        for (int i = 0; i < 60; ++i)
+        foreach (GameObject g in AllWalls)
         {
-            //PuzzleButtons.transform.position += new Vector3(PuzzleButtons.transform.position.x,
-            //    .5f / 30,
-            //    PuzzleButtons.transform.position.z);
-            PuzzleButtons.transform.Translate(Vector3.up * Time.deltaTime);
-            yield return new WaitForFixedUpdate();
+            dw = (DimensionWall)g.GetComponent<DimensionWall>();
+            if (dw.CameraSpace != lastWall)
+                return false;
         }
 
+        return true;
     }
-
-	private bool allOnLayer8()
-	{
-		bool allOnOneSide = true;
-		foreach (GameObject g in AllWalls)
-		{
-			dw = (DimensionWall)g.GetComponent<DimensionWall>();
-            if(dw.SameLayer)
-			    allOnOneSide = false;
-		}
-
-		return allOnOneSide;
-	}
-	
-	private bool allOnLayer9()
-	{
-		bool allOnOneSide = true;
-		foreach (GameObject g in AllWalls)
-		{
-			dw = (DimensionWall)g.GetComponent<DimensionWall>();
-            if (!dw.SameLayer)
-				allOnOneSide = false;
-		}
-
-		return allOnOneSide;
-	}
 
 	void OnTriggerEnter(Collider col)
 	{
@@ -100,22 +87,21 @@ public class SwitchDimension : MonoBehaviour {
                     audio.Play();
                 foreach (GameObject go in MyWalls)
                 {
-                    go.GetComponent<DimensionWall>().Switch();
+                    go.GetComponent<DimensionWall>().SwitchWorld();
+                    go.GetComponentInChildren<DimensionWall>().SwitchWorld();
+
+                    go.GetComponent<DimensionWall>().SwitchMaterial();
+                    go.GetComponentInChildren<DimensionWall>().SwitchMaterial();
                 }
             }
         }
+
+        changeButtonColor();
 	}
 
     // No longer serves a purpose with current puzzles.
 	private void changeButtonColor ()
 	{
-        foreach (GameObject wall in MyWalls)
-        {
-            if (wall.GetComponent<DimensionWall>().SameLayer == true)
-                gameObject.renderer.material.color = transColor;
-            else if (wall.GetComponent<DimensionWall>().SameLayer == false)
-                gameObject.renderer.material.color = solidColor;
-        }
         
 	}
 }
