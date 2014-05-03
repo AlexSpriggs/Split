@@ -96,7 +96,7 @@ public class SwitchDimensionOld : MonoBehaviour {
                     audio.Play();
                 foreach (GameObject go in MyWalls)
                 {
-                    go.GetComponent<DimensionWall>().Switch();
+                    go.GetComponent<DimensionWall>().SwitchMaterial();
                 }
 
 				if(gameObject.renderer.material.color != transColor)
