@@ -23,7 +23,6 @@ public class SwitchDimension : MonoBehaviour {
     void Start()
     {
         wallPuzButtons = PuzzleButtons.GetComponent<WallPuzButtons>();
-        changeButtonColor();
     }
 	// Update is called once per frame
 	void Update () {
@@ -103,14 +102,11 @@ public class SwitchDimension : MonoBehaviour {
                 {
                     go.GetComponent<DimensionWall>().Switch();
                 }
-
-				changeButtonColor ();
-
-                //TODO move this somewhere else.  It keeps the current puzzle working, but could break something in the future.
             }
         }
 	}
 
+    // No longer serves a purpose with current puzzles.
 	private void changeButtonColor ()
 	{
         foreach (GameObject wall in MyWalls)

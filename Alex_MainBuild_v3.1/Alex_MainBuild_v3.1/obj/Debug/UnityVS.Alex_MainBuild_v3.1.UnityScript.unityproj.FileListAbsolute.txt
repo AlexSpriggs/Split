@@ -9,3 +9,14 @@ C:\Users\Zerophase\Documents\GitHub\Split\Alex_MainBuild_v3.1\Alex_MainBuild_v3.
 C:\Users\Zerophase\Documents\GitHub\Split\Alex_MainBuild_v3.1\Alex_MainBuild_v3.1\obj\Debug\UnityVS.Alex_MainBuild_v3.1.UnityScript.unityprojResolveAssemblyReference.cache
 C:\Users\Zerophase\Documents\GitHub\Split\Alex_MainBuild_v3.1\Alex_MainBuild_v3.1\obj\Debug\Assembly-UnityScript.dll
 C:\Users\Zerophase\Documents\GitHub\Split\Alex_MainBuild_v3.1\Alex_MainBuild_v3.1\obj\Debug\Assembly-UnityScript.pdb
+C:\Users\Zerophase\Desktop\Split\Alex_MainBuild_v3.1\Alex_MainBuild_v3.1\Temp\UnityVS_bin\Debug\Assembly-UnityScript.dll
+C:\Users\Zerophase\Desktop\Split\Alex_MainBuild_v3.1\Alex_MainBuild_v3.1\Temp\UnityVS_bin\Debug\Assembly-UnityScript.pdb
+C:\Users\Zerophase\Desktop\Split\Alex_MainBuild_v3.1\Alex_MainBuild_v3.1\Temp\UnityVS_bin\Debug\UnityEditor.dll
+C:\Users\Zerophase\Desktop\Split\Alex_MainBuild_v3.1\Alex_MainBuild_v3.1\Temp\UnityVS_bin\Debug\UnityEngine.dll
+C:\Users\Zerophase\Desktop\Split\Alex_MainBuild_v3.1\Alex_MainBuild_v3.1\Temp\UnityVS_bin\Debug\Assembly-UnityScript-firstpass.pdb
+C:\Users\Zerophase\Desktop\Split\Alex_MainBuild_v3.1\Alex_MainBuild_v3.1\Temp\UnityVS_bin\Debug\Assembly-CSharp-firstpass.pdb
+C:\Users\Zerophase\Desktop\Split\Alex_MainBuild_v3.1\Alex_MainBuild_v3.1\Temp\UnityVS_bin\Debug\UnityEngine.xml
+C:\Users\Zerophase\Desktop\Split\Alex_MainBuild_v3.1\Alex_MainBuild_v3.1\Temp\UnityVS_bin\Debug\UnityEditor.xml
+C:\Users\Zerophase\Desktop\Split\Alex_MainBuild_v3.1\Alex_MainBuild_v3.1\obj\Debug\UnityVS.Alex_MainBuild_v3.1.UnityScript.unityprojResolveAssemblyReference.cache
+C:\Users\Zerophase\Desktop\Split\Alex_MainBuild_v3.1\Alex_MainBuild_v3.1\obj\Debug\Assembly-UnityScript.dll
+C:\Users\Zerophase\Desktop\Split\Alex_MainBuild_v3.1\Alex_MainBuild_v3.1\obj\Debug\Assembly-UnityScript.pdb
