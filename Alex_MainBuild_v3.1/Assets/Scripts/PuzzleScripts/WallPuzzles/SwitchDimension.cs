@@ -3,105 +3,48 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-public class SwitchDimension : MonoBehaviour {
+//TODO Make this a manager
+public class SwitchDimension : MonoBehaviour
+{
+    private List<WallButton> wallButtons = new List<WallButton>();
 
-	public List<GameObject> MyWalls;
-	public List<GameObject> AllWalls;
+    private ArrowButtonContainer arrowButtonContainer;
 
-	public GameObject PuzzleButtons;
-    private WallPuzButtons wallPuzButtons;
+    private bool puzzleIsSolved = false;
 
-	public Shader transparent,Specular;
-
-	private bool lockSwitches = false;
-
-	private DimensionWall dw;
+    private Walls walls;
     private World lastWall;
 
-	static float baseColor = 255;	
-	Color transColor = new Color(30f / baseColor, 255f / baseColor , 0f / baseColor);
-	Color solidColor = new Color(188f / baseColor, 0f / baseColor , 255f / baseColor);
-	
+    bool Test = true;
+
     void Start()
     {
-        wallPuzButtons = PuzzleButtons.GetComponent<WallPuzButtons>();
+        wallButtons.AddRange(gameObject.GetComponentsInChildren<WallButton>());
 
-        lastWall = AllWalls.Last<GameObject>().GetComponent<DimensionWall>().CameraSpace;
+        arrowButtonContainer = gameObject.GetComponentInChildren<ArrowButtonContainer>();
 
-        changeButtonColor();
+        walls = gameObject.GetComponentInChildren<Walls>();
+        //lastWall = walls.PuzzleWalls.Last<DimensionWall>().GetComponent<DimensionWall>().CameraSpace;
     }
-	// Update is called once per frame
-	void Update () {
 
-        if (allOnSameLayer())
+	void Update () 
+    {
+        if ((allOnSameLayer() && !puzzleIsSolved))
         {
-            lockSwitches = true;
-            StartCoroutine(LowerSwitch());
-            if (!wallPuzButtons.PuzzleButtonsAreRaising)
-                StartCoroutine(RaiseButtons());
+            puzzleIsSolved = true;
+            MessageDispatcher.Instance.DispatchMessage(new Telegram(wallButtons.Cast<ButtonBase>().ToList()));
+            MessageDispatcher.Instance.DispatchMessage(new Telegram(arrowButtonContainer));
         }
-	
 	}
-
-    IEnumerator RaiseButtons()
-    {
-        wallPuzButtons.PuzzleButtonsAreRaising = true;
-        for (int i = 0; i < 60; ++i)
-        {
-            PuzzleButtons.transform.Translate(Vector3.up * Time.deltaTime);
-            yield return new WaitForFixedUpdate();
-        }
-
-    }
-
-    IEnumerator LowerSwitch()
-    {
-        for (int i = 0; i < 30; ++i)
-        {
-            transform.Translate(Vector3.down * Time.deltaTime);
-            yield return new WaitForFixedUpdate();
-        }
-
-    }
 
     private bool allOnSameLayer()
     {
-        foreach (GameObject g in AllWalls)
+        foreach (DimensionWall dw in walls.PuzzleWalls)
         {
-            dw = (DimensionWall)g.GetComponent<DimensionWall>();
-            if (dw.CameraSpace != lastWall)
+            if (dw.CameraSpace != walls.PuzzleWalls.Last<DimensionWall>().GetComponent<DimensionWall>().CameraSpace)
                 return false;
         }
 
         return true;
     }
-
-	void OnTriggerEnter(Collider col)
-	{
-        if (!lockSwitches)
-        {
-            if (col.gameObject.tag == "Player")
-            {
-				Debug.Log("Switch Pressed");
-                if (!audio.isPlaying)
-                    audio.Play();
-                foreach (GameObject go in MyWalls)
-                {
-                    go.GetComponent<DimensionWall>().SwitchWorld();
-                    go.GetComponentInChildren<DimensionWall>().SwitchWorld();
-
-                    go.GetComponent<DimensionWall>().SwitchMaterial();
-                    go.GetComponentInChildren<DimensionWall>().SwitchMaterial();
-                }
-            }
-        }
-
-        changeButtonColor();
-	}
-
-    // No longer serves a purpose with current puzzles.
-	private void changeButtonColor ()
-	{
-        
-	}
 }

@@ -6,16 +6,20 @@ public class DimensionWall : MonoBehaviour
 {
     public int layer;
 	public float alpha;
+    //TODO Make private and use Resource.Load
 	public Material transparent, specular;
 	public Shader sTransparent, sSpecular;
     public World CameraSpace { get; private set; }
 
-    public GameObject Tab;
+    private GameObject tab;
 	// Use this for initialization
 	void Awake () 
     {
         CameraSpace = (World)gameObject.layer;
 		alpha = .15f;
+
+        if (gameObject.GetComponentInChildren<Tab>() != null)
+            tab = gameObject.GetComponentInChildren<Tab>().gameObject;
 	}
 	
 	// Update is called once per frame
@@ -43,12 +47,12 @@ public class DimensionWall : MonoBehaviour
 		if(this.renderer.material.shader == sSpecular)
 		{
 			this.renderer.material = transparent;
-            this.GetComponentInChildren<DimensionWall>().renderer.material = transparent;
+            tab.renderer.material = transparent;
 		}
 		else if(this.renderer.material.shader == sTransparent)
 		{
 			this.renderer.material = specular;
-            this.GetComponentInChildren<DimensionWall>().renderer.material = specular;
+            tab.renderer.material = specular;
 		}
 	}
 }
