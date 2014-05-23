@@ -36,8 +36,8 @@ public class Tab : MonoBehaviour
 				specular = Resources.Load("Materials/PlaidSpec") as Material;
                 break;
             case "Stripes":
-				transparent = Resources.Load("Materials/StripesSpec") as Material;
-				specular = Resources.Load("Materials/StripesTransp") as Material;
+				transparent = Resources.Load("Materials/StripesTransp") as Material;
+				specular = Resources.Load("Materials/StripesSpec") as Material;
                 break;
             default:
                 break;
