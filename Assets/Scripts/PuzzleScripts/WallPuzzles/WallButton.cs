@@ -2,11 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class WallButton : ButtonBase 
+public class WallButton : ButtonBase
 {
     public List<GameObject> MyWalls;
 
     private bool lockSwitches = false;
+	
 
     public override void HandleMessage(Telegram telegram)
     {
@@ -33,22 +34,47 @@ public class WallButton : ButtonBase
         }
     }
 
-    void OnTriggerEnter(Collider col)
+	public override void HighLight()
+	{
+		gameObject.renderer.material.color = Color.red;
+	}
+
+	public override void DeSelect()
+	{
+		gameObject.renderer.material.color = color;
+	}
+    public override void Activate()
     {
+		Debug.Log("Button has been pressed");
         if (!lockSwitches)
         {
-            if (col.gameObject.tag == "Player")
+			Activated = true;
+			StartCoroutine(FlashColors());
+            Debug.Log("Switch Pressed");
+            if (!audio.isPlaying)
+                audio.Play();
+            foreach (GameObject go in MyWalls)
             {
-                Debug.Log("Switch Pressed");
-                if (!audio.isPlaying)
-                    audio.Play();
-                foreach (GameObject go in MyWalls)
-                {
-                    go.GetComponent<DimensionWall>().SwitchWorld();
+                go.GetComponent<DimensionWall>().SwitchWorld();
 
-                    go.GetComponent<DimensionWall>().SwitchMaterial();
-                }
+                go.GetComponent<DimensionWall>().SwitchMaterial();
             }
         }
     }
+
+	public override IEnumerator FlashColors()
+	{
+		for (int i = 0; i < 15; i++)
+		{
+			if (gameObject.renderer.material.color == color)
+				gameObject.renderer.material.color = Color.red;
+			else
+				gameObject.renderer.material.color = color;
+
+			yield return new WaitForSeconds(.5f);
+			
+		}
+		Activated = false;
+		gameObject.renderer.material.color = color;
+	}
 }
