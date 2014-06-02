@@ -6,7 +6,12 @@ public class WallButton : ButtonBase
 {
     public List<GameObject> MyWalls;
 
-    private bool lockSwitches = false;
+    protected override void Start()
+    {
+        lockSwitches = false;
+
+        base.Start();
+    }
 	
 
     public override void HandleMessage(Telegram telegram)
@@ -27,7 +32,7 @@ public class WallButton : ButtonBase
     private IEnumerator LowerSwitch()
     {
         lockSwitches = true;
-        for (int i = 0; i < 60; ++i)
+        for (int i = 0; i < 300; ++i)
         {
             transform.Translate(Vector3.down * Time.deltaTime);
             yield return new WaitForFixedUpdate();

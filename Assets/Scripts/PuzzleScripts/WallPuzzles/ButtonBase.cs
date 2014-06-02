@@ -7,9 +7,10 @@ public abstract class ButtonBase : MonoBehaviour, IActivate
 	protected Color color;
 
 	public bool Activated { get; protected set; }
+    protected bool lockSwitches;
     protected abstract void callCoroutine();
 
-    protected void Start()
+    protected virtual void Start()
     {
 		if(gameObject.renderer != null)
 			color = gameObject.renderer.material.color;
