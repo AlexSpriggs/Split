@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Activator : MonoBehaviour 
+public class ButtonActivator : MonoBehaviour 
 {
 	private ForwardDirection playerForward;
 	// Use this for initialization

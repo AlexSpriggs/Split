@@ -15,8 +15,8 @@ public class SwitchDimension : MonoBehaviour
     private Walls walls;
     private World lastWall;
 
-    private Telegram wallButtonsTelegram;
-    private Telegram arrowButtonContainerTelegram;
+    private ButtonTelegram wallButtonsTelegram;
+    private ButtonTelegram arrowButtonContainerTelegram;
 
     void Start()
     {
@@ -27,8 +27,8 @@ public class SwitchDimension : MonoBehaviour
         walls = gameObject.GetComponentInChildren<Walls>();
         //lastWall = walls.PuzzleWalls.Last<DimensionWall>().GetComponent<DimensionWall>().CameraSpace;
 
-        wallButtonsTelegram = new Telegram(wallButtons.Cast<ButtonBase>().ToList());
-        arrowButtonContainerTelegram = new Telegram(arrowButtonContainer);
+        wallButtonsTelegram = new ButtonTelegram(wallButtons.Cast<ButtonBase>().ToList());
+        arrowButtonContainerTelegram = new ButtonTelegram(arrowButtonContainer);
     }
 
 	void Update () 

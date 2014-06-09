@@ -21,7 +21,8 @@ public class ArrowPress : ButtonBase {
 
         if (!lockSwitches)
         {
-            Activated = true;
+			base.Activate();
+
             StartCoroutine(FlashColors());
             if (!audio.isPlaying)
                 audio.Play();
@@ -42,25 +43,7 @@ public class ArrowPress : ButtonBase {
 
 	public override void DeSelect()
 	{
-		gameObject.renderer.material.color = color;
-	}
-
-	public override IEnumerator FlashColors()
-	{
-		for (int i = 0; i < 15; i++)
-		{
-			if (gameObject.renderer.material.color == color)
-				gameObject.renderer.material.color = Color.red;
-			else
-				gameObject.renderer.material.color = color;
-
-			yield return new WaitForSeconds(.5f);
-			
-		}
-        Debug.Log("Colors have flashed");
-
-		Activated = false;
-		gameObject.renderer.material.color = color;
+		gameObject.renderer.material.color = startColor;
 	}
 
     protected override void callCoroutine()
@@ -68,7 +51,7 @@ public class ArrowPress : ButtonBase {
         throw new System.NotImplementedException();
     }
 
-    public override void HandleMessage(Telegram telegram)
+	public override void HandleMessage(Telegram<ButtonBase> telegram)
     {
         if (telegram.TargetList != null)
         {

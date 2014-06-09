@@ -14,7 +14,7 @@ public class ArrowButtonContainer : ButtonBase
         base.Start();
     }
 
-    public override void HandleMessage(Telegram telegram)
+	public override void HandleMessage(Telegram<ButtonBase> telegram)
     {
         if (telegram.Target == this)
         {
