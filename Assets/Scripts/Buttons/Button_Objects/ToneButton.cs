@@ -30,16 +30,19 @@ public class ToneButton : ButtonBase
 
 	public override void Activate()
 	{
-		base.Activate();
-
-		Debug.Log("Tone: " + Tone.ToString());
-
-		foreach (PlatformTelegram platformMessage in platformTelegrams)
+		if (!Activated)
 		{
-			MessageDispatcher.Instance.DispatchMessage(platformMessage);
+			base.Activate();
+
+			Debug.Log("Tone: " + Tone.ToString());
+
+			foreach (PlatformTelegram platformMessage in platformTelegrams)
+			{
+				MessageDispatcher.Instance.DispatchMessage(platformMessage);
+			}
+
+			ColorsShouldFlash();
 		}
-		
-		ColorsShouldFlash();
 	}
 
 	protected override void callCoroutine()

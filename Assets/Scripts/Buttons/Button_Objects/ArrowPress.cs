@@ -19,7 +19,7 @@ public class ArrowPress : ButtonBase {
     {
         Debug.Log("Selected");
 
-        if (!lockSwitches)
+        if (!lockSwitches && !Activated)
         {
 			base.Activate();
 

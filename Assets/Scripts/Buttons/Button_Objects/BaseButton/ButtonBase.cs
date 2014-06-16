@@ -22,7 +22,7 @@ public abstract class ButtonBase : MonoBehaviour, IActivate, IReceiver<ButtonBas
 
     public virtual void HandleMessage(Telegram<ButtonBase> telegram)
 	{
-
+		throw new System.NotImplementedException();
 	}
 
     public void SubScribe()
@@ -68,10 +68,14 @@ public abstract class ButtonBase : MonoBehaviour, IActivate, IReceiver<ButtonBas
 			yield return new WaitForSeconds(.5f);
 		}
 
+		DeActivate();
+	}
+
+	private void DeActivate()
+	{
 		Activated = false;
 		gameObject.renderer.material.color = startColor;
 	}
-
 	protected void OnDestroy()
 	{
 		UnSubScribe();

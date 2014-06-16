@@ -15,17 +15,17 @@ public class Tab : MonoBehaviour
         get { return specular; }
     }
     
-	private string name;
+	private string nameTab;
 
     void Start()
     {
         if (gameObject.name.Contains("_Double"))
         {
-          name =  gameObject.name.Trim("_Double".ToCharArray());
+          nameTab =  gameObject.name.Trim("_Double".ToCharArray());
         }
 		else
-			name = gameObject.name;
-        switch (name)
+			nameTab = gameObject.name;
+        switch (nameTab)
         {
             case "FilledIn":
                 transparent = Resources.Load("Materials/FilledInTransp") as Material;

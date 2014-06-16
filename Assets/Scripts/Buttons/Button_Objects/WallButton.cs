@@ -24,6 +24,7 @@ public class WallButton : ButtonBase
             }
         }
     }
+
     protected override void callCoroutine()
     {
         StartCoroutine(LowerSwitch());
@@ -42,7 +43,7 @@ public class WallButton : ButtonBase
     public override void Activate()
     {
 		Debug.Log("Button has been pressed");
-        if (!lockSwitches)
+        if (!lockSwitches && !Activated)
         {
 			base.Activate();
 

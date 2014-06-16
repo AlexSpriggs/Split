@@ -12,12 +12,15 @@ public class ToneMachine : ButtonBase
 
 	public override void Activate()
 	{
-		base.Activate();
+		if (!Activated)
+		{
+			base.Activate();
 
-		Debug.Log("Tone sound is playing");
-		Debug.Log("Button order from left: 1, 3, 5, 2, 6");
+			Debug.Log("Tone sound is playing");
+			Debug.Log("Button order from left: 1, 3, 5, 2, 6");
 
-		ColorsShouldFlash();
+			ColorsShouldFlash();
+		}
 	}
 
 	protected override void callCoroutine()
