@@ -16,8 +16,9 @@ public class ResetButton : ButtonBase
 		for (int i = 0; i < platformHolder.transform.childCount; i++)
 		{
 			Platforms platform = platformHolder.transform.GetChild(i).GetComponent<Platforms>();
-			platforms.Add(platform.gameObject);
-			resetPositions.Add(new ResetPosition(platform, platform.transform.position));
+			//platforms.Add(platform.gameObject);
+			ResetTonePuzzle.Instance.Add(platform, platform.transform.position);
+			//resetPositions.Add(new ResetPosition(platform, platform.transform.position));
 		}
 	}
 
@@ -27,18 +28,18 @@ public class ResetButton : ButtonBase
 		{
 			base.Activate();
 
-			foreach (GameObject p in platforms)
-			{
-				for (int i = 0; i < resetPositions.Count; i++)
-				{
-					if (resetPositions[i].Equals(p))
-					{
-						GameObject tempP = p;
-						resetPositions[i].ResetToInitialPosition(ref tempP);
-						break;
-					}
-				}
-			}
+			ResetTonePuzzle.Instance.Reset();
+			//foreach (GameObject p in platforms)
+			//{
+			//	for (int i = 0; i < resetPositions.Count; i++)
+			//	{
+			//		if (resetPositions[i].Equals(p))
+			//		{
+			//			resetPositions[i].ResetToInitialPosition();
+			//			break;
+			//		}
+			//	}
+			//}
 			
 			ColorsShouldFlash();
 		}

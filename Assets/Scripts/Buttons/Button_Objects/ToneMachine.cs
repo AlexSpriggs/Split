@@ -1,11 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class ToneMachine : ButtonBase 
 {
+	private List<Tones> tones = new List<Tones>() 
+								{ 
+									Tones.ONE, 
+									Tones.THREE,
+									Tones.FIVE,
+									Tones.TWO,
+									Tones.SIX
+								};
 	protected override void Start()
 	{
 		highLightColor = Color.blue;
+
+		Solution.Instance.AddRange(tones);
 
 		base.Start();
 	}

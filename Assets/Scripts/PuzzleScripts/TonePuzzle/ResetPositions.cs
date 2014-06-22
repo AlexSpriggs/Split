@@ -33,7 +33,17 @@ public class ResetPosition
 			return false;
 	}
 
-	public void ResetToInitialPosition(ref GameObject gameObjectToReset)
+	public bool Equals(GameObject gameObject)
+	{
+		if (this.gameObject == gameObject)
+		{
+			return true;
+		}
+		else
+			return false;
+	}
+
+	public void ResetToInitialPosition()
 	{
 		movePlatform.ResetTimesMoved();
 

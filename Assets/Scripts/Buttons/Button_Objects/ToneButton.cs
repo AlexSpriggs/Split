@@ -30,17 +30,24 @@ public class ToneButton : ButtonBase
 
 	public override void Activate()
 	{
-		if (!Activated)
+		if (!Activated && !Solution.Instance.Solved(Tone))
 		{
 			base.Activate();
 
-			Debug.Log("Tone: " + Tone.ToString());
-
-			foreach (PlatformTelegram platformMessage in platformTelegrams)
+			if (Solution.Instance.Correct(Tone))
 			{
-				MessageDispatcher.Instance.DispatchMessage(platformMessage);
-			}
+				Debug.Log("Tone: " + Tone.ToString());
 
+				foreach (PlatformTelegram platformMessage in platformTelegrams)
+				{
+					MessageDispatcher.Instance.DispatchMessage(platformMessage);
+				}
+			}
+			else
+			{
+				Solution.Instance.Reset();
+				ResetTonePuzzle.Instance.Reset();
+			}
 			ColorsShouldFlash();
 		}
 	}

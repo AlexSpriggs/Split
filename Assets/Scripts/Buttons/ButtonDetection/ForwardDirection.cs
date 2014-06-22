@@ -7,6 +7,8 @@ public class ForwardDirection : MonoBehaviour
 	private Ray ray;
 	private float distance = 20f;
 
+	private List<Vector3> viewCone = new List<Vector3>();
+
 	private RaycastHit hitInfo;
 
 	public Transform ForwardPosition { get { return transform; } }
@@ -17,6 +19,10 @@ public class ForwardDirection : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
+		viewCone.Add(gameObject.transform.position + new Vector3(0f, 2f, distance));
+		viewCone.Add(gameObject.transform.position + new Vector3(0f, -2f, distance));
+		viewCone.Add(gameObject.transform.position + new Vector3(2f, 0f, distance));
+		viewCone.Add(gameObject.transform.position + new Vector3(-2f, 0f, distance));
 		Camera[] cameraArray = GameObject.FindObjectsOfType<Camera>();
 		cameras.AddRange(cameraArray);
 
@@ -32,6 +38,13 @@ public class ForwardDirection : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
+		for (int i = 0; i < viewCone.Count; i++)
+		{
+			Vector3 dir = gameObject.transform.position - gameObject.transform.forward;
+			dir = Quaternion.Euler(gameObject.transform.up) * dir;
+			viewCone[i] += dir + gameObject.transform.forward;
+			Debug.DrawLine(gameObject.transform.position, viewCone[i], Color.blue);
+		}
 		ray.origin = transform.position;
 		ray.direction = transform.forward;
 		Debug.DrawRay(ray.origin, ray.direction * distance, Color.red);
