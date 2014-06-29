@@ -2,9 +2,8 @@
 using System.Collections;
 
 public enum World { LEFT = 8, RIGHT = 9}
-public class DimensionWall : MonoBehaviour 
+public class DimensionWall : PuzzleObject 
 {
-    //TODO Make private and use Resource.Load
 	private Material transparent, specular;
 	private Shader sTransparent, sSpecular;
 
@@ -16,13 +15,7 @@ public class DimensionWall : MonoBehaviour
 	// Use this for initialization
 	void Awake () 
     {
-        CameraSpace = (World)gameObject.layer;
-
-        specular = Resources.Load("Materials/GateMatSpec") as Material;
-        transparent = Resources.Load("Materials/GateMatTransp") as Material;
-       
-        sTransparent = Shader.Find("Transparent/Specular");
-        sSpecular = Shader.Find("Specular");
+		setUpShaders();
 
         if (gameObject.GetComponentInChildren<Tab>() != null)
         {
@@ -30,10 +23,21 @@ public class DimensionWall : MonoBehaviour
             tab = gameObject.GetComponentInChildren<Tab>();
         }
 	}
-	
-	// Update is called once per frame
-	void Update () 
-    {
+
+	private void setUpShaders()
+	{
+		specular = Resources.Load("Materials/GateMatSpec") as Material;
+		transparent = Resources.Load("Materials/GateMatTransp") as Material;
+
+		sTransparent = Shader.Find("Transparent/Specular");
+		sSpecular = Shader.Find("Specular");
+	}
+
+	protected override void Start()
+	{
+		base.Start();
+
+		CameraSpace = (World)gameObject.layer;
 	}
 
     public void SwitchWorld()
@@ -63,5 +67,12 @@ public class DimensionWall : MonoBehaviour
 			this.renderer.material = specular;
             tabGameObject.renderer.material = tab.Specular;
 		}
+	}
+
+	public void SaveState()
+	{
+		saveState();
+
+		tab.SaveState();
 	}
 }

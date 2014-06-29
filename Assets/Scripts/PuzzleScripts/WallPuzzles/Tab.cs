@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Tab : MonoBehaviour
+public class Tab : PuzzleObject
 {
     private Material transparent;
     public Material Transparent 
@@ -17,14 +17,10 @@ public class Tab : MonoBehaviour
     
 	private string nameTab;
 
-    void Start()
+    protected override void Start()
     {
-        if (gameObject.name.Contains("_Double"))
-        {
-          nameTab =  gameObject.name.Trim("_Double".ToCharArray());
-        }
-		else
-			nameTab = gameObject.name;
+		removeDouble();
+
         switch (nameTab)
         {
             case "FilledIn":
@@ -42,5 +38,22 @@ public class Tab : MonoBehaviour
             default:
                 break;
         }
+
+		base.Start();
     }
+
+	private void removeDouble()
+	{
+		if (gameObject.name.Contains("_Double"))
+		{
+			nameTab = gameObject.name.Trim("_Double".ToCharArray());
+		}
+		else
+			nameTab = gameObject.name;
+	}
+
+	public void SaveState()
+	{
+		saveState();
+	}
 }

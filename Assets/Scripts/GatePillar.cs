@@ -1,18 +1,26 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GatePillar : MonoBehaviour {
+public class GatePillar : PuzzleObject {
 
 	public bool moveDown = false;
 
 	public float moveSpeed;
 
-	void Start()
+	private static bool solved;
+	public static bool Solved
 	{
-
+		get { return solved; }
 	}
 
-	// Update is called once per frame
+	protected override void Start()
+	{
+		base.Start();
+
+		if (CareTaker.Instance.Exists(this))
+			destroyGate();
+	}
+
 	void Update () {
 
 		if(moveDown)
@@ -21,14 +29,21 @@ public class GatePillar : MonoBehaviour {
 
 			StartCoroutine("StartCountdown");
 		}
-
-	
 	}
 
 	IEnumerator StartCountdown()
 	{
+		solved = true;
+
 		yield return new WaitForSeconds(5);
 
+		saveState();
+		
+		destroyGate();
+	}
+
+	private void destroyGate()
+	{
 		Destroy(gameObject);
 	}
 }

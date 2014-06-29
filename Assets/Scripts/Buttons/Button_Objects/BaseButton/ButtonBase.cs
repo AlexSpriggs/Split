@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class ButtonBase : MonoBehaviour, IActivate, IReceiver<ButtonBase>
+public abstract class ButtonBase : PuzzleObject, IActivate, IReceiver<ButtonBase>
 {
     protected bool buttonIsRaising = false;
 	
@@ -9,15 +9,19 @@ public abstract class ButtonBase : MonoBehaviour, IActivate, IReceiver<ButtonBas
 	protected Color highLightColor = Color.red;
 
 	public bool Activated { get; private set; }
-    protected bool lockSwitches;
+
     protected abstract void callCoroutine();
 
-    protected virtual void Start()
+    protected override void Start()
     {
 		if(gameObject.renderer != null)
 			startColor = gameObject.renderer.material.color;
 
+		
+
         SubScribe();
+
+		base.Start();
     }
 
     public virtual void HandleMessage(Telegram<ButtonBase> telegram)
@@ -45,12 +49,12 @@ public abstract class ButtonBase : MonoBehaviour, IActivate, IReceiver<ButtonBas
 		StartCoroutine(FlashColors());
 	}
 
-	public virtual void HighLight()
+	public void HighLight()
 	{
 		gameObject.renderer.material.color = highLightColor;
 	}
 
-	public virtual void DeSelect()
+	public void DeSelect()
 	{
 		gameObject.renderer.material.color = startColor;
 	}

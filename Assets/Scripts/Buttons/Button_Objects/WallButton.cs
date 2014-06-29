@@ -8,9 +8,12 @@ public class WallButton : ButtonBase
 
     protected override void Start()
     {
-        lockSwitches = false;
+		base.Start();
 
-        base.Start();
+		if (!CareTaker.Instance.Exists(this))
+		{
+			locked = false;
+		}
     }
 
 
@@ -32,18 +35,22 @@ public class WallButton : ButtonBase
 
     private IEnumerator LowerSwitch()
     {
-        lockSwitches = true;
+        locked = true;
         for (int i = 0; i < 300; ++i)
         {
             transform.Translate(Vector3.down * Time.deltaTime);
             yield return new WaitForFixedUpdate();
         }
+
+		saveState();
     }
+
+	
 
     public override void Activate()
     {
 		Debug.Log("Button has been pressed");
-        if (!lockSwitches && !Activated)
+        if (!locked && !Activated)
         {
 			base.Activate();
 

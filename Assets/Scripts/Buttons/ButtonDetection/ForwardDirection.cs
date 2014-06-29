@@ -53,12 +53,12 @@ public class ForwardDirection : MonoBehaviour
 				}
 
 				Button = hitInfo.collider.gameObject.GetComponent<ButtonBase>();
-				if(!Button.Activated)
+				if(!Button.Activated && !Button.Locked)
 					Button.HighLight();
 			}
 			else if(Button != null)
 			{
-				if(!Button.Activated)
+				if(!Button.Activated && !Button.Locked)
 					Button.DeSelect();
 				Button = null;
 			}
@@ -66,7 +66,7 @@ public class ForwardDirection : MonoBehaviour
 		}
 		else if(Button != null)
 		{
-			if(!Button.Activated)
+			if(!Button.Activated && !Button.Locked)
 				Button.DeSelect();
 			Button = null;
 		}

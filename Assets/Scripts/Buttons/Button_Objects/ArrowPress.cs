@@ -10,16 +10,17 @@ public class ArrowPress : ButtonBase {
 
     protected override void Start()
     {
-        lockSwitches = true;
+		base.Start();
 
-        base.Start();
+		if(!CareTaker.Instance.Exists(this))
+			locked = true;
     }
 
 	public override void Activate()
     {
         Debug.Log("Selected");
 
-        if (!lockSwitches && !Activated)
+        if (!locked && !Activated)
         {
 			base.Activate();
 
@@ -31,19 +32,24 @@ public class ArrowPress : ButtonBase {
         }
     }
 
-    public void EnableButton()
-    {
-        lockSwitches = false;
-    }
-
-    public override void HighLight()
+	void Update()
 	{
-		gameObject.renderer.material.color = Color.red;
+		if (GatePillar.Solved)
+			DisableButton();
 	}
 
-	public override void DeSelect()
+    public void EnableButton()
+    {
+        locked = false;
+
+		saveState();
+    }
+
+	public void DisableButton()
 	{
-		gameObject.renderer.material.color = startColor;
+		locked = true;
+
+		saveState();
 	}
 
     protected override void callCoroutine()
