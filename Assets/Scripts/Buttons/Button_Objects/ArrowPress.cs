@@ -8,9 +8,12 @@ public class ArrowPress : ButtonBase {
     public ArrowDirection ButtonDirection;
     public GameObject Solution;
 
+	private GatePillar gatePillar;
     protected override void Start()
     {
 		base.Start();
+
+		gatePillar = gameObject.transform.parent.parent.parent.GetComponentInChildren<GatePillar>();
 
 		if(!CareTaker.Instance.Exists(this))
 			locked = true;
@@ -34,7 +37,7 @@ public class ArrowPress : ButtonBase {
 
 	void Update()
 	{
-		if (GatePillar.Solved)
+		if (gatePillar.Solved)
 			DisableButton();
 	}
 

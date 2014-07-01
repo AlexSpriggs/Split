@@ -10,10 +10,13 @@ public class PuzzleObject : MonoBehaviour
 	protected bool locked;
 	public bool Locked { get { return locked; } }
 
-	protected virtual void Start()
+	protected virtual void Awake()
 	{
 		ID = UniqueIdGenerator.Instance.GeneratUniqueId(gameObject);
+	}
 
+	protected virtual void Start()
+	{
 		if (CareTaker.Instance.Exists(this))
 			CareTaker.Instance.RestoreState(this);
 

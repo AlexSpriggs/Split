@@ -7,8 +7,10 @@ public class GatePillar : PuzzleObject {
 
 	public float moveSpeed;
 
-	private static bool solved;
-	public static bool Solved
+	private Vector3 down = new Vector3(0, 1, 0);
+
+	private  bool solved;
+	public  bool Solved
 	{
 		get { return solved; }
 	}
@@ -25,7 +27,7 @@ public class GatePillar : PuzzleObject {
 
 		if(moveDown)
 		{
-			transform.position -= new Vector3(0, 1, 0) * moveSpeed * Time.deltaTime;
+			transform.position -= down * moveSpeed * Time.deltaTime;
 
 			StartCoroutine("StartCountdown");
 		}
