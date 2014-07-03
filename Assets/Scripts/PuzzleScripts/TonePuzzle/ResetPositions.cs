@@ -9,8 +9,8 @@ public class ResetPosition
 
 	private MovePlatform movePlatform;
 
-	private Platforms platform;
-	public ResetPosition(Platforms platform, Vector3 initialPosition)
+	private Platform platform;
+	public ResetPosition(Platform platform, Vector3 initialPosition)
 	{
 		this.platform = platform;
 		this.gameObject = platform.gameObject;

@@ -16,7 +16,7 @@ public class ResetTonePuzzle
 	private List<ResetPosition> resetPositions = new List<ResetPosition>();
 	private List<GameObject> platforms = new List<GameObject>();
 
-	public void Add(Platforms platform, Vector3 initialPosition)
+	public void Add(Platform platform, Vector3 initialPosition)
 	{
 		AddGameObject(platform.gameObject);
 		resetPositions.Add(new ResetPosition(platform, initialPosition));

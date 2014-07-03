@@ -4,7 +4,7 @@ using System.Collections;
 public class MessageDispatcher 
 {
     public delegate void SendMessageHandler<T>(T telegram);
-	public event SendMessageHandler<Telegram<Platforms>> SendMessagePlatform;
+	public event SendMessageHandler<Telegram<Platform>> SendMessagePlatform;
     public event SendMessageHandler<Telegram<ButtonBase>> SendMessageButton;
 
 	

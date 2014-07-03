@@ -45,14 +45,14 @@ public class ArrowPress : ButtonBase {
     {
         locked = false;
 
-		saveState();
+		SaveState();
     }
 
 	public void DisableButton()
 	{
 		locked = true;
 
-		saveState();
+		SaveState();
 	}
 
     protected override void callCoroutine()

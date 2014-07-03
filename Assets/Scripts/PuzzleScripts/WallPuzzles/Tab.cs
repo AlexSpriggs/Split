@@ -51,9 +51,4 @@ public class Tab : PuzzleObject
 		else
 			nameTab = gameObject.name;
 	}
-
-	public void SaveState()
-	{
-		saveState();
-	}
 }

@@ -16,12 +16,14 @@ public class ToneButton : ButtonBase
 	{
 		highLightColor = Color.green;
 
+		ButtonPanel buttonPanel = gameObject.GetComponentInParent<ButtonPanel>();
 		for (int i = 0; i < 2; i++)
 		{
 			if (targetPlatforms[i] != null)
 			{
-				Platforms platform = targetPlatforms[i].GetComponent<Platforms>();
+				Platform platform = targetPlatforms[i].GetComponent<Platform>();
 				platformTelegrams.Add(new PlatformTelegram(platform, MoveDistances[i]));
+				Solution.Instance.Add(buttonPanel.PuzzleNumber, platform);
 			}
 		}
 
@@ -30,7 +32,7 @@ public class ToneButton : ButtonBase
 
 	public override void Activate()
 	{
-		if (!Activated && !Solution.Instance.Solved(Tone))
+		if (!Activated && !Solution.Instance.Solved())
 		{
 			base.Activate();
 
@@ -59,6 +61,5 @@ public class ToneButton : ButtonBase
 
 	public override void HandleMessage(Telegram<ButtonBase> telegram)
 	{
-		throw new System.NotImplementedException();
 	}
 }

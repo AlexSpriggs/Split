@@ -13,8 +13,10 @@ public class DimensionWall : PuzzleObject
     private Tab tab;
 
 	// Use this for initialization
-	void Awake () 
+	protected override void Awake () 
     {
+		base.Awake();
+
 		setUpShaders();
 
         if (gameObject.GetComponentInChildren<Tab>() != null)
@@ -69,9 +71,9 @@ public class DimensionWall : PuzzleObject
 		}
 	}
 
-	public void SaveState()
+	public override void SaveState()
 	{
-		saveState();
+		base.SaveState();
 
 		tab.SaveState();
 	}

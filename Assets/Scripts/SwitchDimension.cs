@@ -36,7 +36,7 @@ public class SwitchDimension : PuzzleObject
         {
             locked = true;
 
-			saveState();
+			SaveState();
 
 			saveWallsState();
 

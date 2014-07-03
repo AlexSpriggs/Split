@@ -41,6 +41,6 @@ public class ToneMachine : ButtonBase
 
 	public override void HandleMessage(Telegram<ButtonBase> telegram)
 	{
-		throw new System.NotImplementedException();
+		
 	}
 }

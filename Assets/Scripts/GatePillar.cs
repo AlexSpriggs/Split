@@ -39,7 +39,7 @@ public class GatePillar : PuzzleObject {
 
 		yield return new WaitForSeconds(5);
 
-		saveState();
+		SaveState();
 		
 		destroyGate();
 	}

@@ -11,15 +11,26 @@ public class Solution
 	private static int correctInput = 0;
 	private int pressLimit;
 
+	private List<Platform> platformsUsed = new List<Platform>();
+
+	private Dictionary<int, List<Platform>> platformsTest = new Dictionary<int, List<Platform>>();
+
 	private static Solution instance;
 	public static Solution Instance
 	{
-		get { return instance ?? (instance = new Solution()); }
+		get 
+		{ return instance ?? (instance = new Solution()); }
 	}
 
 	public void Add(Tones tone)
 	{
 		correctOrder.Add(tone);
+	}
+
+	public void Add(int puzzleNumber, Platform platform)
+	{
+		//if (!platformsTest.ContainsValue(platform))
+		//	platformsTest.Add(puzzleNumber, platform);
 	}
 
 	public void AddRange(List<Tones> tones)
@@ -51,10 +62,12 @@ public class Solution
 		currentInput++;
 	}
 
-	public bool Solved(Tones tone)
+	public bool Solved()
 	{
 		if (correctInput == pressLimit)
+		{
 			return true;
+		}
 		else
 			return false;
 	}

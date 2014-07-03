@@ -1,50 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
-public class Platforms : MonoBehaviour, IReceiver<Platforms>
+public class Platforms : MonoBehaviour 
 {
-	private Vector3 startPosition;
+	private List<Platform> platform = new List<Platform>();
 
-	private float startTime;
-	private float speed = 100f;
-
-	private int timesMoved = 1;
-
-	private MovePlatform movePlatform;
-	public MovePlatform GetMovePlatform { get { return movePlatform; } }
-	// Use this for initialization
-	void Awake () 
+	void Start () 
 	{
-		movePlatform = new MovePlatform(this);
-		SubScribe();
+		platform.AddRange(gameObject.GetComponentsInChildren<Platform>());
 	}
-
-	void OnDestroy()
+	
+	// Update is called once per frame
+	void Update () 
 	{
-		UnSubScribe();
-	}
-
-	public void HandleMessage(Telegram<Platforms> telegram)
-	{
-		if(telegram.Target == this)
+		foreach (Platform p in platform)
 		{
-			PlatformTelegram platforms = telegram as PlatformTelegram;
-
-			movePlatform.StartPosition = gameObject.transform.position;
-			movePlatform.SetStartTime();
-
-			movePlatform.SetMoveDistance(platforms.MoveDistance);
-			movePlatform.Run(MoveType.MOVE);
+			if (Solution.Instance.Solved() && p.GetMovePlatform.Moving)
+				p.SaveState();
 		}
-	}
-
-	public void SubScribe()
-	{
-		MessageDispatcher.Instance.SendMessagePlatform += new MessageDispatcher.SendMessageHandler<Telegram<Platforms>>(HandleMessage);
-	}
-
-	public void UnSubScribe()
-	{
-		MessageDispatcher.Instance.SendMessagePlatform -= new MessageDispatcher.SendMessageHandler<Telegram<Platforms>>(HandleMessage);
 	}
 }

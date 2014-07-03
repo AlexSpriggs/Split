@@ -26,7 +26,7 @@ public abstract class ButtonBase : PuzzleObject, IActivate, IReceiver<ButtonBase
 
     public virtual void HandleMessage(Telegram<ButtonBase> telegram)
 	{
-		throw new System.NotImplementedException();
+		//Should never hit here.
 	}
 
     public void SubScribe()

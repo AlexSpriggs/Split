@@ -5,6 +5,7 @@ public class PuzzleObject : MonoBehaviour
 {
 	protected SavedState state;
 
+	[HideInInspector]
 	public string ID;
 
 	protected bool locked;
@@ -44,7 +45,7 @@ public class PuzzleObject : MonoBehaviour
 		this.state = new SavedState(this);
 	}
 
-	protected void saveState()
+	public virtual void SaveState()
 	{
 		SetState(this);
 		CareTaker.Instance.SaveState(this);

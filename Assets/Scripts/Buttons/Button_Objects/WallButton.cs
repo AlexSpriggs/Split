@@ -42,7 +42,7 @@ public class WallButton : ButtonBase
             yield return new WaitForFixedUpdate();
         }
 
-		saveState();
+		SaveState();
     }
 
 	
