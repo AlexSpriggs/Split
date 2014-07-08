@@ -24,6 +24,9 @@ public class ToneButton : ButtonBase
 				Platform platform = targetPlatforms[i].GetComponent<Platform>();
 				platformTelegrams.Add(new PlatformTelegram(platform, MoveDistances[i]));
 				Solution.Instance.Add(buttonPanel.PuzzleNumber, platform);
+
+				if (CareTaker.Instance.Exists(platform))
+					locked = true;
 			}
 		}
 

@@ -23,6 +23,9 @@ public class Platform : PuzzleObject, IReceiver<Platform>
 
 	protected override void Start()
 	{
+		if (CareTaker.Instance.Exists(this))
+			Solution.Instance.SetPuzzleSolved();
+
 		base.Start();
 	}
 

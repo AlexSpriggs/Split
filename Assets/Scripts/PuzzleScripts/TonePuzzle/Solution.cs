@@ -35,9 +35,12 @@ public class Solution
 
 	public void AddRange(List<Tones> tones)
 	{
-		correctOrder.AddRange(tones);
+		if(!correctOrder.Contains(tones[0]))
+		{
+			correctOrder.AddRange(tones);
 
-		pressLimit = correctOrder.Count;
+			pressLimit = correctOrder.Count;
+		}
 	}
 
 	public bool Correct(Tones tone)
@@ -70,6 +73,11 @@ public class Solution
 		}
 		else
 			return false;
+	}
+
+	public void SetPuzzleSolved()
+	{
+		correctInput = pressLimit;
 	}
 
 	public void Reset()

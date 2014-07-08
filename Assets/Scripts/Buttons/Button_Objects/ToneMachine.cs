@@ -18,12 +18,15 @@ public class ToneMachine : ButtonBase
 
 		Solution.Instance.AddRange(tones);
 
+		if (Solution.Instance.Solved())
+			locked = true;
+
 		base.Start();
 	}
 
 	public override void Activate()
 	{
-		if (!Activated)
+		if (!Activated && !Solution.Instance.Solved())
 		{
 			base.Activate();
 
