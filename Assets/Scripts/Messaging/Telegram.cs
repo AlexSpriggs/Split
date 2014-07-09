@@ -27,6 +27,17 @@ public class Telegram<T> : EventArgs
 	}
 }
 
+public class CubeTelegram : Telegram<Cubes>
+{
+	public Quaternion Rotation;
+
+	public CubeTelegram(Cubes target, Vector3 rotation)
+		: base(target) 
+	{
+		Rotation = Quaternion.Euler(rotation);
+	}
+}
+
 public class ButtonTelegram : Telegram<ButtonBase>
 {
 	public ButtonTelegram(ButtonBase target)

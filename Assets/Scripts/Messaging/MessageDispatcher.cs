@@ -6,8 +6,7 @@ public class MessageDispatcher
     public delegate void SendMessageHandler<T>(T telegram);
 	public event SendMessageHandler<Telegram<Platform>> SendMessagePlatform;
     public event SendMessageHandler<Telegram<ButtonBase>> SendMessageButton;
-
-	
+	public event SendMessageHandler<Telegram<Cubes>> SendMessageCubes;
 
     private MessageDispatcher() { }
 
@@ -27,5 +26,11 @@ public class MessageDispatcher
 	{
 		if (SendMessagePlatform != null)
 			SendMessagePlatform(platformTelegram);
+	}
+
+	public void DispatchMessage(CubeTelegram cubeTelegram)
+	{
+		if (SendMessageCubes != null)
+			SendMessageCubes(cubeTelegram);
 	}
 }
