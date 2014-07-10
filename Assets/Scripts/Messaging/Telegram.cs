@@ -34,7 +34,7 @@ public class CubeTelegram : Telegram<Cubes>
 	public CubeTelegram(Cubes target, Vector3 rotation)
 		: base(target) 
 	{
-		Rotation = Quaternion.Euler(rotation);
+		Rotation = Quaternion.identity * Quaternion.Euler(rotation);
 	}
 }
 

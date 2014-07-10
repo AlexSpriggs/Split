@@ -5,6 +5,8 @@ public class Cubes : PuzzleObject, IReceiver<Cubes>
 {
 	private float speed = 100f;
 
+	Quaternion currentRot;
+
 	protected override void Awake()
 	{
 		base.Awake();
@@ -34,8 +36,19 @@ public class Cubes : PuzzleObject, IReceiver<Cubes>
 		if(telegram.Target == this)
 		{
 			CubeTelegram cube = telegram as CubeTelegram;
-			StartCoroutine(rotate(cube.Rotation));
+
+			currentRot = cube.Rotation;
+			CareTakerCubeRotations.Instance.SaveState(this);
+
+			StartCoroutine(Rotator.Rotate(gameObject, cube.Rotation));
 		}
+	}
+
+	public Memento<Quaternion> CreateRotationMemento()
+	{
+		Memento<Quaternion> m = new Memento<Quaternion>();
+		m.SetState(Quaternion.Inverse(currentRot));
+		return m;
 	}
 
 	private IEnumerator rotate(Quaternion rotation)
