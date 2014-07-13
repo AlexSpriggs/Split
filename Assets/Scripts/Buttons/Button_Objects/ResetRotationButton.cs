@@ -6,7 +6,8 @@ public class ResetRotationButton : ButtonBase
 	Cubes cube;
 	protected override void Start () 
 	{
-		cube = GameObject.Find("Cubes").GetComponent<Cubes>();
+		cube = gameObject.GetComponentInParent<CubePedastal>().
+						Cube.GetComponent<Cubes>();
 		base.Start();
 	}
 

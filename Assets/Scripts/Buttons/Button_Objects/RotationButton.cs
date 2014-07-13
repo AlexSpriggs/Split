@@ -9,7 +9,8 @@ public class RotationButton : ButtonBase
 
 	protected override void Start () 
 	{
-		Cubes cube = GameObject.Find("Cubes").GetComponent<Cubes>();
+		Cubes cube = gameObject.GetComponentInParent<CubePedastal>().
+						Cube.GetComponent<Cubes>();
 
 		cubeTelegram = new CubeTelegram(cube, Rotation);
 

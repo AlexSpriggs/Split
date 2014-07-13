@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Cubes : PuzzleObject, IReceiver<Cubes>
 {
@@ -7,6 +8,10 @@ public class Cubes : PuzzleObject, IReceiver<Cubes>
 
 	Quaternion currentRot;
 
+	private bool rotation;
+	private bool prevRotation;
+
+	public List<Target> TargetObject = new List<Target>();
 	protected override void Awake()
 	{
 		base.Awake();
@@ -16,7 +21,22 @@ public class Cubes : PuzzleObject, IReceiver<Cubes>
 
 	protected override void Start()
 	{
+		TargetObject.AddRange(gameObject.GetComponentsInChildren<Target>());
 		base.Start();
+	}
+
+	void Update()
+	{
+		if(Rotator.IsRunning == false)
+		{
+			prevRotation = Rotator.IsRunning;
+		}
+		if(rotation != prevRotation)
+		{
+			Debug.Log("should Fire rotation code");
+			rotation = prevRotation = Rotator.IsRunning;
+			//TODO implement Target Send Message;
+		}
 	}
 
 	public void SubScribe()
@@ -41,6 +61,7 @@ public class Cubes : PuzzleObject, IReceiver<Cubes>
 			CareTakerCubeRotations.Instance.SaveState(this);
 
 			StartCoroutine(Rotator.Rotate(gameObject, cube.Rotation));
+			rotation = prevRotation = Rotator.IsRunning;
 		}
 	}
 
@@ -49,19 +70,5 @@ public class Cubes : PuzzleObject, IReceiver<Cubes>
 		Memento<Quaternion> m = new Memento<Quaternion>();
 		m.SetState(Quaternion.Inverse(currentRot));
 		return m;
-	}
-
-	private IEnumerator rotate(Quaternion rotation)
-	{
-		float time = 0f;
-		Quaternion start = transform.rotation;
-		while (time < 1f)
-		{
-
-			transform.rotation =
-				Quaternion.Slerp(start, start * rotation, time);
-			time += Time.deltaTime;
-			yield return new WaitForFixedUpdate();
-		}
 	}
 }
