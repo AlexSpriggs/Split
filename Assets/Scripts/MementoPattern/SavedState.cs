@@ -15,6 +15,12 @@ public struct SavedState
 		get { return position; }
 	}
 
+	private Quaternion rotation;
+	public Quaternion Rotation
+	{
+		get { return rotation; }
+	}
+
 	private string id;
 	public string ID
 	{
@@ -31,6 +37,7 @@ public struct SavedState
 	{
 		locked = puzzleObject.Locked;
 		position = puzzleObject.gameObject.transform.position;
+		rotation = puzzleObject.gameObject.transform.rotation;
 		id = puzzleObject.ID;
 		layer = puzzleObject.gameObject.layer;
 	}

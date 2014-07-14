@@ -17,8 +17,6 @@ public abstract class ButtonBase : PuzzleObject, IActivate, IReceiver<ButtonBase
 		if(gameObject.renderer != null)
 			startColor = gameObject.renderer.material.color;
 
-		
-
         SubScribe();
 
 		base.Start();
@@ -26,7 +24,10 @@ public abstract class ButtonBase : PuzzleObject, IActivate, IReceiver<ButtonBase
 
     public virtual void HandleMessage(Telegram<ButtonBase> telegram)
 	{
-		//Should never hit here.
+		if(telegram.Target == this)
+		{
+			SaveState();
+		}
 	}
 
     public void SubScribe()

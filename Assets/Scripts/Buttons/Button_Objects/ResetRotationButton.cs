@@ -9,11 +9,15 @@ public class ResetRotationButton : ButtonBase
 		cube = gameObject.GetComponentInParent<CubePedastal>().
 						Cube.GetComponent<Cubes>();
 		base.Start();
+
+		if(!CareTaker.Instance.Exists(this))
+			locked = false;
 	}
 
 	public override void Activate()
 	{
-		if(CareTakerCubeRotations.Instance.ContainsKey(cube))
+		if(CareTakerCubeRotations.Instance.ContainsKey(cube) && !Activated &&
+			!locked)
 		{
 			StartCoroutine(ReverseRotation());
 

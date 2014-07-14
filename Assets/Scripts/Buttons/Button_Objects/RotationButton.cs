@@ -15,11 +15,13 @@ public class RotationButton : ButtonBase
 		cubeTelegram = new CubeTelegram(cube, Rotation);
 
 		base.Start();
+		if (!CareTaker.Instance.Exists(this))
+			locked = false;
 	}
 
 	public override void Activate()
 	{
-		if (!Activated)
+		if (!Activated && !locked)
 		{
 			base.Activate();
 

@@ -36,6 +36,7 @@ public class PuzzleObject : MonoBehaviour
 	{
 		state = m.GetState();
 		gameObject.transform.position = state.Position;
+		gameObject.transform.rotation = state.Rotation;
 		locked = state.Locked;
 		gameObject.layer = state.Layer;
 	}

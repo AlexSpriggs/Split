@@ -60,7 +60,7 @@ public class Cubes : PuzzleObject, IReceiver<Cubes>
 			currentRot = cube.Rotation;
 			CareTakerCubeRotations.Instance.SaveState(this);
 
-			StartCoroutine(Rotator.Rotate(gameObject, cube.Rotation));
+			StartCoroutine(Rotator.Rotate(gameObject, cube.Rotation, this));
 			rotation = prevRotation = Rotator.IsRunning;
 		}
 	}

@@ -7,7 +7,8 @@ public class MessageDispatcher
 	public event SendMessageHandler<Telegram<Platform>> SendMessagePlatform;
     public event SendMessageHandler<Telegram<ButtonBase>> SendMessageButton;
 	public event SendMessageHandler<Telegram<Cubes>> SendMessageCubes;
-
+	public event SendMessageHandler<Telegram<Target>> SendMessageTarget;
+	public event SendMessageHandler<Telegram<Targets>> SendMessageTargets;
     private MessageDispatcher() { }
 
     private static MessageDispatcher instance;
@@ -32,5 +33,17 @@ public class MessageDispatcher
 	{
 		if (SendMessageCubes != null)
 			SendMessageCubes(cubeTelegram);
+	}
+
+	public void DispatchMessage(Telegram<Target> targetTelegram)
+	{
+		if (SendMessageTarget != null)
+			SendMessageTarget(targetTelegram);
+	}
+
+	public void DispatchMessage(Telegram<Targets> targetsTelegram)
+	{
+		if (SendMessageTargets != null)
+			SendMessageTargets(targetsTelegram);
 	}
 }
