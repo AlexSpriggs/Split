@@ -7,6 +7,7 @@ public class Targets : MonoBehaviour, IReceiver<Target>
 	private List<Target> targetsLeft = new List<Target>();
 	private List<Target> targetsRight = new List<Target>();
 	private bool intersect = false;
+	private bool locked = false;
 
 	private int intersectCount = 0;
 	private int maxIntersectCount;
@@ -14,6 +15,8 @@ public class Targets : MonoBehaviour, IReceiver<Target>
 	private List<Cubes> cubes = new List<Cubes>();
 	private List<ResetRotationButton> resetRotationButtons = new List<ResetRotationButton>();
 	private List<RotationButton> rotationButtons = new List<RotationButton>();
+
+	private GatePillar pillars;
 
 	void Start () 
 	{
@@ -35,7 +38,8 @@ public class Targets : MonoBehaviour, IReceiver<Target>
 					transform.GetChild(i).GetComponentsInChildren<RotationButton>()
 				);
 		}
-		
+
+		pillars = gameObject.transform.parent.GetComponentInChildren<GatePillar>();
 
 		SubScribe();
 	}
@@ -59,6 +63,9 @@ public class Targets : MonoBehaviour, IReceiver<Target>
 			{
 				if (BoundsCheck(telegram.Target))
 				{
+					locked = true;
+					pillars.moveDown = true;
+
 					Debug.Log("Cubes interset");
 					saveState();
 
@@ -76,15 +83,6 @@ public class Targets : MonoBehaviour, IReceiver<Target>
 		}
 	}
 
-	//Trying to make generic foreach loop based on button type passed in.
-	//private void sendButtonMessaage(List<ButtonBase> buttonBases)
-	//{
-	//	foreach (typeof(buttonBases.GetType()) buttonBase in buttonBases)
-	//	{
-		
-	//	}
-	//}
-
 	private void saveState()
 	{
 		foreach (Cubes cube in cubes)
@@ -95,6 +93,9 @@ public class Targets : MonoBehaviour, IReceiver<Target>
 
 	private bool BoundsCheck(Target target)
 	{
+		if (locked)
+			return false;
+
 		switch(target.gameObject.tag)
 		{
 			case "LeftWorld":

@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GatePillar : PuzzleObject, IReceiver<GatePillar> {
-
+public class GatePillar : PuzzleObject, IReceiver<GatePillar> 
+{
+	[HideInInspector]
 	public bool moveDown = false;
 
 	public float moveSpeed;
@@ -67,6 +68,7 @@ public class GatePillar : PuzzleObject, IReceiver<GatePillar> {
 			new MessageDispatcher.SendMessageHandler<Telegram<GatePillar>>(HandleMessage);
 	}
 
+	// Used for buttons for opening goal object gate.
 	public void HandleMessage(Telegram<GatePillar> telegram)
 	{
 		if (telegram.Target == this)
