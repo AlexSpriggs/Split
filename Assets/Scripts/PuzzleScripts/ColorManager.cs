@@ -21,7 +21,7 @@ public class ColorManager : MonoBehaviour {
     public bool CheckForColorChange(GameObject[] tilesToCheck, TileSolution.PillarLocation pillarLocation, int[] tilePillars)
     {
         //TODO see if tileTocheck.Length can replace 4
-        Color[] tilesColorToCheck = new Color[4];
+        Color[] tilesColorToCheck = new Color[tilesToCheck.Length];
         tilesColorToCheck = assignCheckedColors(tilesToCheck, tilePillars);
 
         //TODO Remove and replace with below if works.

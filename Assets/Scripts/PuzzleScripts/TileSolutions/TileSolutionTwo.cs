@@ -8,7 +8,6 @@ public class TileSolutionTwo : TileSolution
     //The order of heights to colors is yellow, black, red, blue, green
 	protected override void Start () 
     {
-        //TODO Test to see if right manager are grabbed.
         setUpPillarManager();
 
         assignTilePillars();

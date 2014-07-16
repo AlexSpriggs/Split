@@ -125,6 +125,17 @@ public class PillarManager : MonoBehaviour, IObserver {
             effectOfColor(keyColor);
     }
 
+	public virtual void CheckPillar(GameObject tileOne, GameObject tileTwo, 
+		GameObject keyTile)
+	{
+		Color keyColor = assignColor(keyTile);
+		Color tileOneColor = assignColor(tileOne);
+		Color tileTwoColor = assignColor(tileTwo);
+
+		if (tileOneColor == keyColor && tileTwoColor == keyColor)
+			effectOfColor(keyColor);
+	}
+
     public virtual void CheckPillar(GameObject tileOne, GameObject tileTwo,
         GameObject tileThree, GameObject keyTile)
     {
