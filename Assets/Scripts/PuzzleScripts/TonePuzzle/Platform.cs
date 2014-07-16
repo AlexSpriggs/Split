@@ -36,10 +36,6 @@ public class Platform : PuzzleObject, IReceiver<Platform>
 
 	public void HandleMessage(Telegram<Platform> telegram)
 	{
-		//if(telegram.Source == typeof(Solution))
-		//{
-		//	SaveState();
-		//}
 		if(telegram.Target == this)
 		{
 			PlatformTelegram platforms = telegram as PlatformTelegram;

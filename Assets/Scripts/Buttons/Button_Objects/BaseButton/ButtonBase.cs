@@ -8,7 +8,8 @@ public abstract class ButtonBase : PuzzleObject, IActivate, IReceiver<ButtonBase
 	protected Color startColor;
 	protected Color highLightColor = Color.red;
 
-	public bool Activated { get; private set; }
+	protected float waitTimeBetweenFlashes = .5f;
+	public bool Activated { get; protected set; }
 
     protected abstract void callCoroutine();
 
@@ -70,7 +71,7 @@ public abstract class ButtonBase : PuzzleObject, IActivate, IReceiver<ButtonBase
 			else
 				gameObject.renderer.material.color = startColor;
 
-			yield return new WaitForSeconds(.5f);
+			yield return new WaitForSeconds(waitTimeBetweenFlashes);
 		}
 
 		DeActivate();

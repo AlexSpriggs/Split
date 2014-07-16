@@ -43,6 +43,9 @@ public class ToneButton : ButtonBase
 			{
 				Debug.Log("Tone: " + Tone.ToString());
 
+				if (!audio.isPlaying)
+					audio.Play();
+
 				foreach (PlatformTelegram platformMessage in platformTelegrams)
 				{
 					MessageDispatcher.Instance.DispatchMessage(platformMessage);

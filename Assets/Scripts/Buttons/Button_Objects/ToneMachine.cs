@@ -30,7 +30,8 @@ public class ToneMachine : ButtonBase
 		{
 			base.Activate();
 
-			Debug.Log("Tone sound is playing");
+			if (!audio.isPlaying)
+				audio.Play();
 			Debug.Log("Button order from left: 1, 3, 5, 2, 6");
 
 			ColorsShouldFlash();

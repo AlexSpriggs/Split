@@ -9,6 +9,8 @@ public class MessageDispatcher
 	public event SendMessageHandler<Telegram<Cubes>> SendMessageCubes;
 	public event SendMessageHandler<Telegram<Target>> SendMessageTarget;
 	public event SendMessageHandler<Telegram<Targets>> SendMessageTargets;
+	public event SendMessageHandler<Telegram<GatePillar>> SendMessagePillar;
+
     private MessageDispatcher() { }
 
     private static MessageDispatcher instance;
@@ -45,5 +47,11 @@ public class MessageDispatcher
 	{
 		if (SendMessageTargets != null)
 			SendMessageTargets(targetsTelegram);
+	}
+
+	public void DispatchMessage(Telegram<GatePillar> gatePillarTelegram)
+	{
+		if (SendMessagePillar != null)
+			SendMessagePillar(gatePillarTelegram);
 	}
 }

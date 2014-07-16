@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GatePillar : PuzzleObject {
+public class GatePillar : PuzzleObject, IReceiver<GatePillar> {
 
 	public bool moveDown = false;
 
@@ -15,9 +15,14 @@ public class GatePillar : PuzzleObject {
 		get { return solved; }
 	}
 
+	private int messagesSent = 0;
+	private const int messagesNeeded = 2;
+
 	protected override void Start()
 	{
 		base.Start();
+
+		SubScribe();
 
 		if (CareTaker.Instance.Exists(this))
 			destroyGate();
@@ -33,6 +38,7 @@ public class GatePillar : PuzzleObject {
 		}
 	}
 
+	
 	IEnumerator StartCountdown()
 	{
 		solved = true;
@@ -47,5 +53,28 @@ public class GatePillar : PuzzleObject {
 	private void destroyGate()
 	{
 		Destroy(gameObject);
+	}
+
+	public void SubScribe()
+	{
+		MessageDispatcher.Instance.SendMessagePillar +=
+			new MessageDispatcher.SendMessageHandler<Telegram<GatePillar>>(HandleMessage);
+	}
+
+	public void UnSubScribe()
+	{
+		MessageDispatcher.Instance.SendMessagePillar -=
+			new MessageDispatcher.SendMessageHandler<Telegram<GatePillar>>(HandleMessage);
+	}
+
+	public void HandleMessage(Telegram<GatePillar> telegram)
+	{
+		if (telegram.Target == this)
+		{
+			messagesSent++;
+
+			if (messagesSent == messagesNeeded)
+				moveDown = true;
+		}
 	}
 }

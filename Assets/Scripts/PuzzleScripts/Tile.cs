@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Tile : MonoBehaviour 
+public class Tile : ButtonBase 
 {
     //TODO if tiles break add Player back in.
 	//public GameObject Player;
@@ -12,7 +12,7 @@ public class Tile : MonoBehaviour
 	public bool TilePressed = false;
 
 	// Use this for initialization
-	void Start () 
+	protected override void Start () 
 	{
 		for (int i = 0; i < color.Length; i++) 
 		{
@@ -47,29 +47,37 @@ public class Tile : MonoBehaviour
 		gameObject.renderer.material.color = color[colorIterator];
 		
 		colorIterator++;
+
+		waitTimeBetweenFlashes = .1f;
+		highLightColor = Color.magenta;
+
+		base.Start();
 	}
-	
-	void OnTriggerEnter(Collider collider)
+
+	public override void Activate()
 	{
-		if (collider.gameObject.tag == "Player") 
+		if (!Activated && !locked)
 		{
+			base.Activate();
+
 			TilePressed = true;
-			if(!audio.isPlaying)
+			if (!audio.isPlaying)
 				audio.Play();
-			gameObject.renderer.material.color = color[colorIterator];
-		}
-	}
-	
-	void OnTriggerExit(Collider collider)
-	{
-		if (collider.gameObject.tag == "Player") 
-		{
-			if (colorIterator == 4) 
+			startColor = color[colorIterator];
+
+			ColorsShouldFlash();
+
+			if (colorIterator == 4)
 			{
 				colorIterator = 0;
 			}
 			else
 				colorIterator++;
 		}
+	}
+
+	protected override void callCoroutine()
+	{
+		throw new System.NotImplementedException();
 	}
 }

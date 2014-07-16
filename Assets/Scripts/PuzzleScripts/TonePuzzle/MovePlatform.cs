@@ -10,8 +10,8 @@ public class MovePlatform
 	private Vector3 moveDistance;
 	public void SetMoveDistance(Vector3 moveDistance)
 	{
-		this.moveDistance = new Vector3(moveDistance.x * timesMoved, moveDistance.y,
-			moveDistance.z);
+		this.moveDistance = new Vector3(moveDistance.x, moveDistance.y,
+			moveDistance.z * timesMoved);
 	}
 
 	private float startTime;

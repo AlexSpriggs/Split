@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public enum ArrowDirection { LEFT, RIGHT, UP, DOWN };
 
@@ -8,12 +9,15 @@ public class ArrowPress : ButtonBase {
     public ArrowDirection ButtonDirection;
     public GameObject Solution;
 
-	private GatePillar gatePillar;
+	private List<GatePillar> gatePillars = new List<GatePillar>();
     protected override void Start()
     {
 		base.Start();
 
-		gatePillar = gameObject.transform.parent.parent.parent.GetComponentInChildren<GatePillar>();
+		gatePillars.AddRange
+			(
+				gameObject.transform.parent.parent.parent.GetComponentsInChildren<GatePillar>()
+			);
 
 		if(!CareTaker.Instance.Exists(this))
 			locked = true;
@@ -37,8 +41,11 @@ public class ArrowPress : ButtonBase {
 
 	void Update()
 	{
-		if (gatePillar.Solved)
-			DisableButton();
+		foreach (GatePillar gatePillar in gatePillars)
+		{
+			if (gatePillar.Solved)
+				DisableButton();
+		}
 	}
 
     public void EnableButton()
