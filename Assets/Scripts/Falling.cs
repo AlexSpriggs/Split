@@ -6,15 +6,21 @@ public class Falling : MonoBehaviour {
 	public Vector3 StartPosition;
 
 	// Use this for initialization
-	void Start () {
-
-		StartPosition = transform.position;
-	
+	void Start () 
+	{
+		SetStartPosition();
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	
+	void Update () 
+	{
+		if (Application.isLoadingLevel)
+			SetStartPosition();
+	}
+
+	private void SetStartPosition()
+	{
+		StartPosition = transform.position;
 	}
 
 	void OnTriggerEnter(Collider col)

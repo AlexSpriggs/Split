@@ -307,9 +307,6 @@ public class OVRPlayerController : OVRComponent
 				DirXform.TransformDirection(Vector3.right * moveInfluence) * BackAndSideDampen;
 
 		}
-
-        if (OVRGamepadController.GPC_GetButton((int)OVRGamepadController.Button.A))
-            Jump();
 			
 		float rightAxisX = 
 		OVRGamepadController.GPC_GetAxis((int)OVRGamepadController.Axis.RightXAxis);

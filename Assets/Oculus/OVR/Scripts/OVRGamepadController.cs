@@ -117,10 +117,10 @@ public class OVRGamepadController : MonoBehaviour
 	// Update
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Joystick1Button0))
+        if (CustomInput.GetButtonDown("Jump"))
         {
             gameObject.GetComponent<OVRPlayerController>().Jump();
-
+			
         }
 
 		GPC_Available = GPC_Update();
