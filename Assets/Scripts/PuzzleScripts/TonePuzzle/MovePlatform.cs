@@ -53,16 +53,20 @@ public class MovePlatform
 	private IEnumerator Move()
 	{
 		moving = false;
-		
+
+		float time = 0f;
 		while ((startPosition - platform.gameObject.transform.position).sqrMagnitude < moveDistance.sqrMagnitude)
 		{
 			float mag = (startPosition - platform.gameObject.transform.position).sqrMagnitude;
-			float distCovered = (Time.time - startTime) * speed;
+			float distCovered = time * speed;
 			float fracJourney = distCovered / (startPosition.magnitude + moveDistance.magnitude);
 			platform.gameObject.transform.position = Vector3.Lerp(startPosition, startPosition + moveDistance, fracJourney);
 
-			if (Mathf.Abs((startPosition - platform.gameObject.transform.position).sqrMagnitude - moveDistance.sqrMagnitude) < .01f)
-				break;
+			//if (Mathf.Abs((startPosition - platform.gameObject.transform.position).sqrMagnitude - moveDistance.sqrMagnitude) < .01f)
+			//	break;
+
+			time += Time.deltaTime;
+
 			yield return new WaitForFixedUpdate();
 		}
 
@@ -74,11 +78,15 @@ public class MovePlatform
 	private IEnumerator MoveTo()
 	{
 		moving = false;
+
+		float time = 0f;
 		while (platform.gameObject.transform.position != moveDistance)
 		{
-			float distCovered = (Time.time - startTime) * speed;
+			float distCovered = time * speed;
 			float fracJourney = distCovered / moveDistance.magnitude;
 			platform.gameObject.transform.position = Vector3.Lerp(startPosition, moveDistance, fracJourney);
+
+			time += Time.deltaTime;
 			yield return new WaitForFixedUpdate();
 		}
 
