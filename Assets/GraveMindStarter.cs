@@ -6,7 +6,7 @@ public class GraveMindStarter : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
-		Application.LoadLevel(6);
+		Application.LoadLevel(7);
 	
 	}
 	
